@@ -1,0 +1,161 @@
+/* #fbf8fd  */
+
+.main-box {
+    background-color: #fff;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.landingImg {
+    height: 100vh;
+    width: 40vw;
+}
+
+.signLogin {
+    padding: 2em 5em;
+}
+
+.ask {
+    text-align: right;
+    width: 50vw;
+}
+
+.ask p {
+    display: inline-block;
+}
+
+.opt-btn {
+    display: inline-block;
+    width: 105px;
+    margin-left: 2em;
+    padding: 0.5em 1em;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    border: 1px solid grey;
+    border-radius: 24px;
+    background-color: #fff;
+    color: rgb(46, 46, 46);
+}
+
+.form-box {
+    margin-top: 2rem;
+    margin-left: 3rem;
+}
+
+.form label {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.form input {
+    background: white;
+    border: 1px solid rgb(205, 205, 206);
+    width: 20em;
+    height: 50px;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-size: large;
+}
+
+form a {
+    display: block;
+}
+
+.opt-val-btn {
+    margin-top: 1em;
+    background-color: #7436ff;
+    color: white;
+    cursor: pointer;
+    padding: 0.5em 1em;
+    font-size: 1.345rem;
+    width: 150px;
+    font-weight: bold;
+    border: 2px solid #7436ff;
+    border-radius: 18px;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    box-shadow: 0px 6px 20px -5px #844ff6;
+}
+
+.opt-val-btn:hover {
+    border: 2px solid #7436ff;
+    background-color: #fff;
+    color: #7436ff;
+}
+
+::placeholder {
+    color: rgb(151, 153, 160);
+    opacity: 0.4;
+}
+
+.forgotPass {
+    margin-top: 0.8em;
+    font-size: small;
+    opacity: 0.6;
+}
+
+.gmail-logo {
+    height: 30px;
+    width: 30px;
+    margin-left: 0.9em;
+}
+
+.gmail {
+    opacity: 0.8;
+    margin-top: 1em;
+    margin-left: 5em;
+    display: flex;
+    margin-right: 2em;
+    text-align: center;
+}
+
+hr {
+    background-color: #fff;
+    width: 300px;
+    padding: 0;
+    margin-top: 40px;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.role-btn {
+    background: transparent;
+    border-color: transparent;
+    text-transform: capitalize;
+    font-size: 1.25rem;
+    font-weight: 100;
+    opacity: 0.5;
+    letter-spacing: .1rem;
+    margin: 0 .5rem 0 0;
+    transition: all .3s linear;
+    cursor: pointer;
+    padding: .25rem 0;
+    line-height: 1;
+    outline-color: #e0fcff;
+}
+
+.active-btn, .role-btn:hover {
+    color: #7436ff;
+    box-shadow: 0 2px #7436ff;
+    opacity: 1;
+}
+
+.role div {
+    font-size: large;
+    font-weight: 500;
+    margin: 0 .7rem 0 0.1rem;
+    padding: .25rem 0;
+}
+
+.role {
+    display: flex;
+    box-sizing: border-box;
+}
