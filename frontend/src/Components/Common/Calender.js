@@ -2,10 +2,11 @@ import React from 'react'
 
 function Calender() {
     return (
-        <div>
-           <h1>Calender</h1> 
-        </div>
-    )
+      <header>
+        <h2>Calendar</h2>
+        <hr />
+      </header>
+    );
 }
 
 export default Calender

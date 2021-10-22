@@ -2,10 +2,11 @@ import React from 'react'
 
 function Settings() {
     return (
-        <div>
-            <h1>Settings</h1>
-        </div>
-    )
+      <header>
+        <h2>Settings</h2>
+        <hr />
+      </header>
+    );
 }
 
 export default Settings

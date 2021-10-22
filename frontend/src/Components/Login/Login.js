@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import gmail from "../../assets/gmail.png";
+// import gmail from "../../assets/gmail.png";
 import Axios from "axios";
+import {GoogleLogin} from "react-google-login";
 
 const Login = ({ setLoginStatus }) => {
   const [email, setEmail] = useState("");
@@ -22,10 +23,12 @@ const Login = ({ setLoginStatus }) => {
           console.log(response.data);
           const infoObj = {
             token: response.data.token,
+            id: response.data.id,
             name: response.data.name,
             email: response.data.email,
+            role: response.data.role,
           };
-          localStorage.setItem('info',JSON.stringify(infoObj));
+          localStorage.setItem("info", JSON.stringify(infoObj));
           setLoginStatus(response.data.auth);
         })
         .catch((err) => {
@@ -34,6 +37,44 @@ const Login = ({ setLoginStatus }) => {
     } else {
       alert("Enter both username and password!!");
     }
+  };
+  const onLoginSuccess = (googleData) => {
+    Axios.post("http://localhost:3002/api/v1/auth/google/verify", {
+      token: googleData.tokenId,
+      role: roleStudent === true ? "Student" : "Teacher",
+    })
+      .then((response) => {
+        console.log("Login Success99:", response);
+        const infoObj = {
+          token: response.data.token,
+          id:response.data.id,
+          name: response.data.name,
+          email: response.data.email,
+          role:response.data.role,
+        };
+        localStorage.setItem("info", JSON.stringify(infoObj));
+        setLoginStatus(true);
+      })
+      .catch((err) => {
+        alert("user does'nt exist, Please register!");
+        console.log(err);
+      });
+   
+    // store returned user somehow
+  };
+
+  // const onLoginSuccess = (res) => {
+  //   console.log("Login Success:", res.profileObj);
+  //   const infoObj = {
+  //     token: res.profileObj.googleId,
+  //     name: res.profileObj.name,
+  //     email: res.profileObj.email,
+  //   };
+  //   localStorage.setItem("info", JSON.stringify(infoObj));
+  //   setLoginStatus(true);
+  // };
+  const onLoginFailure = (res) => {
+    console.log("Login Failed:", res);
   };
   return (
     <main className="form-box">
@@ -80,10 +121,16 @@ const Login = ({ setLoginStatus }) => {
         <button className="opt-val-btn" type="submit">
           Login
         </button>
-        <hr />
+        <hr className="hr-login" />
         <div className="gmail">
-          <p>Login with </p>
-          <img className="gmail-logo" src={gmail} alt="gmail-logo" />
+          <GoogleLogin
+            clientId="552682266934-gqdhnqb14ksoib7tdl4c1716rs2ija5s.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={onLoginSuccess}
+            onFailure={onLoginFailure}
+            cookiePolicy={"single_host_origin"}
+            // isSignedIn={true}
+          />
         </div>
       </form>
     </main>

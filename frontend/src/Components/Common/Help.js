@@ -2,10 +2,11 @@ import React from 'react'
 
 function Help() {
     return (
-        <div>
-           <h1>Help</h1> 
-        </div>
-    )
+      <header>
+        <h2>Help</h2>
+        <hr />
+      </header>
+    );
 }
 
 export default Help

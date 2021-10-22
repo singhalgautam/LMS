@@ -2,10 +2,11 @@ import React from 'react'
 
 function Doubts() {
     return (
-        <div>
-           <h1>Doubts</h1> 
-        </div>
-    )
+      <header>
+        <h2>Doubts</h2>
+        <hr />
+      </header>
+    );
 }
 
 export default Doubts

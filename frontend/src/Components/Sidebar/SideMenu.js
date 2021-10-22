@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../assets/web-logo.jpg";
-import user from "../../assets/user.jpg";
+import logo from "../../assets/web-logo-light.jpg";
+import user from "../../assets/user.png";
 import MenuItem from "./MenuItem";
 import { MenuData } from "./MenuData";
 import "./sidebar.css";
+import { GoogleLogout } from "react-google-login";
+import { FaWindows } from "react-icons/fa";
+import Axios from "axios";
 
 
 const SideMenu = (props) => {
   const [inactive, setInactive] = useState(false);
+  const [image,setImage]=useState(null);
 
   useEffect(() => {
     if (inactive) {
@@ -41,7 +45,17 @@ const SideMenu = (props) => {
       });
     });
   }, []);
+  
   const info = JSON.parse(localStorage.getItem("info"));
+  useEffect(() => {
+    Axios.post("http://localhost:3002/getProfile", { id: info.id }).then(
+      (res) => {
+        if (res.data[0].photo) setImage(res.data[0].photo);
+        else setImage(user);
+      }
+    );
+  }, [info.id]);
+
   return (
     <div className={`side-menu ${inactive ? "inactive" : ""}`}>
       <div className="top-section">
@@ -88,15 +102,34 @@ const SideMenu = (props) => {
 
       <div className="side-menu-footer">
         <div className="avatar">
-          <img src={user} alt="user" />
+          {image && <img src={image} alt="user" />}
         </div>
         <div className="user-info">
           <div className="profile-info-wrapper">
-            
             <h5>{info.name}</h5>
             <p>{info.email}</p>
           </div>
-          <i className="bi bi-box-arrow-right" onClick={()=>{props.setLoginStatus(false)}}></i>
+          <i
+            className="bi bi-box-arrow-right"
+            onClick={() => {
+              // window.sessionStorage.clear();
+              // window.localStorage.clear();
+              props.setLoginStatus(false);
+              Axios.get("http://localhost:3002/logout");
+            }}
+          ></i>
+          {/* <GoogleLogout
+            clientId="552682266934-gqdhnqb14ksoib7tdl4c1716rs2ija5s.apps.googleusercontent.com"
+            onLogoutSuccess={() => {
+              // window.sessionStorage.removeItem(
+              //   "oauth2_cs::http://localhost:3000::552682266934-gqdhnqb14ksoib7tdl4c1716rs2ija5s.apps.googleusercontent.com"
+              // );
+              // window.sessionStorage.clear();
+              // window.localStorage.clear();
+              props.setLoginStatus(false);
+              Axios.get("http://localhost:3002/logout");
+            }}
+          /> */}
         </div>
       </div>
     </div>
