@@ -5,16 +5,13 @@ import LandingPage from "./Components/Login/MainPage";
 import SideMenu from "./Components/Sidebar/SideMenu";
 import { MenuData } from "./Components/Sidebar/MenuData";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
+import SingleCourse from "./Components/SingleCourse/SingleCourse";
 function App() {
   const [loginStatus, setLoginStatus] = useState(true);
   // useEffect(() => {
   //   Axios.get("http://localhost:3002/userVerification").then((response) => {
   //     console.log(response);
   //     setLoginStatus(response.data.loggedIn);
-  //     // const info = {
-  //     //   name: response.data.loggedIn,
-  //     // };
   //   });
   // }, []);
 
@@ -35,6 +32,9 @@ function App() {
               {menu.link}
             </Route>
           ))}
+          <Route exact path="/courses/:id">
+            <SingleCourse />
+          </Route>
         </div>
       </Router>
     );

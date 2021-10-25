@@ -1,12 +1,12 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState} from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import "./profile.css";
 import Axios from 'axios';
+import { useGlobalContext } from "../../context";
 
 function Profile() {
-  const [name, setName] = useState("");
-  const [contact, setContact] = useState('');
-  const [image, setImage] = useState(null);
+  const { info, name, setName, contact, setContact, image, setImage } =
+    useGlobalContext();;
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
 
@@ -15,7 +15,7 @@ function Profile() {
     setFileName(e.target.files[0].name);
     setImage(URL.createObjectURL(e.target.files[0]));
   };
-  const info = JSON.parse(localStorage.getItem("info"));
+  
   const id=info.id;
   const uploadFile = async (e) => {
     e.preventDefault();
@@ -41,13 +41,13 @@ function Profile() {
     setImage(null);
   }
 
-  useEffect(() => {
-      Axios.post("http://localhost:3002/getProfile",{id:id}).then((res)=>{
-        setName(res.data[0].name);
-        if (res.data[0].photo) setImage(res.data[0].photo);
-        setContact(res.data[0].contact);
-      })
-    }, [id]);
+  // useEffect(() => {
+  //     Axios.post("http://localhost:3002/getProfile",{id:id}).then((res)=>{
+  //       setName(res.data[0].name);
+  //       if (res.data[0].photo) setImage(res.data[0].photo);
+  //       setContact(res.data[0].contact);
+  //     })
+  //   }, [id]);
     const email=info.email;
     const role=info.role;
     return (

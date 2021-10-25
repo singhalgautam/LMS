@@ -12,6 +12,7 @@ const knex = require("./Source/db");
 const profile = require("./Source/profile");
 const multer = require("multer");
 const path = require("path");
+const { resolveAny } = require("dns/promises");
 
 app.use(express.static("./public"));
 app.use(express.urlencoded({ extended: true }));
@@ -121,7 +122,7 @@ app.post('/getProfile',(req,res)=>{
     res.send(result);
     console.log(result);
   })
-})
+});
 app.post("/removePhoto", (req, res) => {
   profile.removePhoto(req);
 });
@@ -147,12 +148,64 @@ app.post('/upload',upload.single('file'),(req,res)=>{
 
 // Add new course
 
+app.post('/publishCourse',(req,res)=>{
+  knex("courses").insert({
+    courseName: req.body.courseName,
+    credits:req.body.credit,
+    bio:req.body.desc,
+    teacherId:req.body.id,
+    prerequisite:req.body.prereq,
+  }).
+  then((result) => {
+    console.log(result);
+    console.log("Inserted");
+    res.send(result);
+  });
+});
 
+app.get("/getCourseList",(req,res)=>{
+  knex("courses").join('user','teacherId','=','id').select('courseId','courseName','credits','bio','prerequisite','name','photo').then((result)=>{
+    console.log(result);
+    res.send(result);
+  });
+})
 
+app.post("/enrollMe",(req,res)=>{
+  knex("studies")
+    .insert({
+      studentId: req.body.studentId,
+      courseId: req.body.courseId,
+      status: req.body.status,
+    })
+    .then((result) => {
+      console.log(result);
+      res.send('You are Successfully enrolled');
+    });
+})
 
-
-
-
+app.post("/getMyCourses",(req,res)=>{
+  knex("courses")
+    .join("studies", "courses.courseId", "=", "studies.courseId")
+    .where({ studentId: req.body.id })
+    .join("user", "teacherId", "=", "id")
+    .select(
+      "courses.courseId",
+      "courseName",
+      "credits",
+      "bio",
+      "prerequisite",
+      "name",
+      "photo"
+    )
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    });  
+  // knex("studies").where({studentId:req.body.id}).select('courseId').then((result)=>{
+  //   console.log(result);
+  //   res.send(result);
+  // })  
+})
 
 
 

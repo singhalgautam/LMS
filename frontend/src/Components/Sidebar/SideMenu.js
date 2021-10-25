@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/web-logo-light.jpg";
-import user from "../../assets/user.png";
 import MenuItem from "./MenuItem";
 import { MenuData } from "./MenuData";
 import "./sidebar.css";
-import { GoogleLogout } from "react-google-login";
-import { FaWindows } from "react-icons/fa";
 import Axios from "axios";
-
+import { useGlobalContext } from "../../context";
 
 const SideMenu = (props) => {
+  const {image,info}=useGlobalContext();
   const [inactive, setInactive] = useState(false);
-  const [image,setImage]=useState(null);
-
+ 
   useEffect(() => {
     if (inactive) {
       removeActiveClassFromSubMenu();
@@ -27,9 +24,6 @@ const SideMenu = (props) => {
     });
   };
 
-  /*just a little improvement over click function of menuItem
-    Now no need to use expand state variable in MenuItem component
-  */
   useEffect(() => {
     let MenuData = document.querySelectorAll(".menu-item");
     MenuData.forEach((el) => {
@@ -46,15 +40,6 @@ const SideMenu = (props) => {
     });
   }, []);
   
-  const info = JSON.parse(localStorage.getItem("info"));
-  useEffect(() => {
-    Axios.post("http://localhost:3002/getProfile", { id: info.id }).then(
-      (res) => {
-        if (res.data[0].photo) setImage(res.data[0].photo);
-        else setImage(user);
-      }
-    );
-  }, [info.id]);
 
   return (
     <div className={`side-menu ${inactive ? "inactive" : ""}`}>
@@ -118,18 +103,6 @@ const SideMenu = (props) => {
               Axios.get("http://localhost:3002/logout");
             }}
           ></i>
-          {/* <GoogleLogout
-            clientId="552682266934-gqdhnqb14ksoib7tdl4c1716rs2ija5s.apps.googleusercontent.com"
-            onLogoutSuccess={() => {
-              // window.sessionStorage.removeItem(
-              //   "oauth2_cs::http://localhost:3000::552682266934-gqdhnqb14ksoib7tdl4c1716rs2ija5s.apps.googleusercontent.com"
-              // );
-              // window.sessionStorage.clear();
-              // window.localStorage.clear();
-              props.setLoginStatus(false);
-              Axios.get("http://localhost:3002/logout");
-            }}
-          /> */}
         </div>
       </div>
     </div>

@@ -1,14 +1,22 @@
 import React,{useState} from 'react'
-// import Axios from 'axios';
+import Axios from 'axios';
 function AddnewCourse() {
     const [courseName,setCourseName]=useState("");
     const [credit,setCredit]=useState('');
     const [desc,setDesc]=useState("");
     const [prereq,setPrereq]=useState("");
-    
+    const info = JSON.parse(localStorage.getItem("info"));
+    const handleSubmit=(e)=>{
+      Axios.post("http://localhost:3002/publishCourse",{
+        courseName,credit,desc,prereq,id:info.id
+      }).then((res)=>{
+        alert('course is succesfully published');
+      });
+    }
+
     return (
       <div className="flex-container">
-        <form className="form">
+        <form className="form" onSubmit={handleSubmit}>
           <br />
           <h3>Start a new Course</h3>
           <br />

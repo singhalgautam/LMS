@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ViewCourseList() {
+function TeacherDashboard() {
     return (
         <div>
             
@@ -8,4 +8,4 @@ function ViewCourseList() {
     )
 }
 
-export default ViewCourseList
+export default TeacherDashboard

@@ -1,10 +1,10 @@
-import Calender from "../Common/Calender";
-import Courses from "../Common/Courses";
+import Calendar from "../Calendar/Calendar";
+import Courses from "../Courses/Courses";
 import Profile from "../Common/Profile";
 import Help from "../Common/Help";
 import Settings from "../Common/Settings";
-import Doubts from "../Common/Doubts";
-import Dashboard from "../Common/Dashboard";
+import Doubts from "../Doubts/Doubts";
+import Dashboard from "../Dashboard/Dashboard";
 export const MenuData = [
   {
     name: "Dashboard",
@@ -30,10 +30,10 @@ export const MenuData = [
   },
   {
     name: "Calendar",
-    to: `/calendert`,
+    to: `/Calendar`,
     iconClassName: "bi bi-calendar-plus",
     exact: true,
-    link: <Calender />,
+    link: <Calendar />,
   },
   {
     name: "Doubts",
