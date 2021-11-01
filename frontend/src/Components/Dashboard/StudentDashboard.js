@@ -1,12 +1,13 @@
 import React from 'react'
 import Loading from "../../Loading";
 import user from "../../assets/user.png";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useGlobalContext } from "../../context";
+import { color } from "../Color";
 
 function StudentDashboard() {
     const { loading, myCourseList } = useGlobalContext();
-
+    
     if (loading) {
       return <Loading />;
     }
@@ -30,28 +31,16 @@ const MyCourse = ({
   name,
   photo,
 }) => {
-  const color = [
-    ["#FFF5FD", "#FF80E5"],
-    ["#d4e6a5", "#4F641B"],
-    ["#EAE3E3", "#C8B6B6"],
-    ["#EDF6E5", "#3E5E21"],
-    ["#DAD0C2", "#4F4230"],
-    ["#E8E8E8", "#404040"],
-    ["#E4F2F0", "#29564F"],
-    ["#FFF1C2", "#7F8000"],
-    ["#CCCCFF", "#8080FF"],
-    ["#CFE3FF", "#003580"],
-    ["#C9FDD7", "#047C24"],
-    ["#FDD2BF", "#B51212"],
-    ["#C2FFFF", "#007F80"],
-    ["#F5E1DA", "#642F1B"],
-  ];
   const mod = color.length;
-
-//   const { info } = useGlobalContext();
+  //   const { info } = useGlobalContext();
+  // let history = useHistory();
+  // function handleLink() {
+  //   history.push(`/courses/${courseId}`,{name:name,courseId:courseId});
+  //   console.log(history);
+  // }
   let image = user;
   if (photo) image = photo;
-  
+
   return (
     <article className="card">
       <div
@@ -73,8 +62,18 @@ const MyCourse = ({
       <div className="enroll">
         <button className="btn btn-enroll">
           <Link
-            to={`/courses/${courseId}`}
+            // onClick={handleLink}
+            to={
+              {
+                pathname:`/courses/${courseId}`,
+                state:{
+                  name:name,
+                  courseName:"courseName",
+                }
+              }
+            }
             className="link-btn"
+            // state={{name: courseName }}
           >
             Go to course
           </Link>
@@ -82,5 +81,5 @@ const MyCourse = ({
       </div>
     </article>
   );
-};
+};;
 export default StudentDashboard

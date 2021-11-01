@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../context";
 
 function Profile() {
   const { info, name, setName, contact, setContact, image, setImage } =
-    useGlobalContext();;
+    useGlobalContext();
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
 

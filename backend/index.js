@@ -10,6 +10,7 @@ const dotenv = require("dotenv").config();
 const user = require("./Source/login");
 const knex = require("./Source/db");
 const profile = require("./Source/profile");
+// const files = require("./Source/profile");
 const multer = require("multer");
 const path = require("path");
 const { resolveAny } = require("dns/promises");
@@ -40,13 +41,16 @@ app.use(
 );
 
 app.post("/userReg", (req, res) => {
-  user.userRegister(req,res);
+  user.userRegister(req, res);
 });
 
 app.post("/userVerification", (req, res) => {
-  user.loginVerify(req).then(result => {
-    res.json(result);
-  }).catch(err => console.log(err));
+  user
+    .loginVerify(req)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => console.log(err));
 });
 
 app.get("/userVerification", (req, res) => {
@@ -79,98 +83,148 @@ app.get("/isUserAuthentic", verifyJWT, (req, res) => {
   res.send("You are authenticated, Congrats!!");
 });
 
-app.post("/api/v1/auth/google/verify",(req, res) => {
-  user.gmailVerify(req).then((result)=>{
-    res.json(result);
-  }).catch(err => console.log(err));
+app.post("/api/v1/auth/google/verify", (req, res) => {
+  user
+    .gmailVerify(req)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => console.log(err));
 });
 
-app.post("/api/v1/auth/google",(req, res) => {
-  user.gmailRegister(req,res);
-})
+app.post("/api/v1/auth/google", (req, res) => {
+  user.gmailRegister(req, res);
+});
 
-app.get('/logout',(req,res)=>{
+app.get("/logout", (req, res) => {
   res.clearCookie("session");
   res.clearCookie("session-token");
   if (req.session.user) {
     req.session.destroy();
   }
   // res.redirect("/login");
-})
+});
 
 /*****************************************/
 
 //     Get Profile       //
 
 //Use of Multer
-const storage=multer.diskStorage({
-    destination:(req,file,callback)=>{
-        callback(null,'./public/images/');
-    },
-    filename:(req,file,callback)=>{
-        callback(null,Date.now()+path.extname(file.originalname));
-    }
-})
-
-const upload=multer({
-    storage:storage
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "./public/images/");
+  },
+  filename: (req, file, callback) => {
+    callback(null, Date.now() + path.extname(file.originalname));
+  },
 });
 
+const upload = multer({
+  storage: storage,
+});
 
-app.post('/getProfile',(req,res)=>{
-  profile.getProfile(req).then((result)=>{
+app.post("/getProfile", (req, res) => {
+  profile.getProfile(req).then((result) => {
     res.send(result);
     console.log(result);
-  })
+  });
 });
 app.post("/removePhoto", (req, res) => {
   profile.removePhoto(req);
 });
 
-app.post('/upload',upload.single('file'),(req,res)=>{
+app.post("/upload", upload.single("file"), (req, res) => {
   console.log(req.file);
   console.log(req.body.id);
-  let imgsrc = "http://localhost:3002/images/" + req.file.filename; 
+  let imgsrc = "http://localhost:3002/images/" + req.file.filename;
   knex("user")
-    .where({ id:req.body.id})
+    .where({ id: req.body.id })
     .update({
-      contact: req.body.contact ,
-      name:req.body.name,
+      contact: req.body.contact,
+      name: req.body.name,
       photo: imgsrc,
     })
     .then((result) => {
       console.log(result);
       console.log("file uploaded");
     });
-})
+});
 /*************************************************** */
+// uploadFile
+const storage2 = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "./public/file/");
+  },
+  filename: (req, file, callback) => {
+    callback(null, Date.now() + path.extname(file.originalname));
+  },
+});
 
+const upload2 = multer({
+  storage: storage2,
+});
+app.post("/uploadFile", upload2.single("file"), (req, res) => {
+  console.log(req.file);
+  console.log(req.body.courseId);
+  let fileSrc = "http://localhost:3002/file/" + req.file.filename;
+  knex("file")
+    .insert({
+      courseId: req.body.courseId,
+      file: fileSrc,
+      file_name: req.body.fileName,
+    })
+    .then((result) => {
+      console.log(result);
+      console.log("file uploaded");
+    });
+});
+
+app.post("/getFile", (req, res) => {
+  knex("file")
+    .select("file","file_name","fileId")
+    .where({ courseId: req.body.courseId })
+    .then((result) => res.send(result));
+});
+
+/*********************************** */
 
 // Add new course
 
-app.post('/publishCourse',(req,res)=>{
-  knex("courses").insert({
-    courseName: req.body.courseName,
-    credits:req.body.credit,
-    bio:req.body.desc,
-    teacherId:req.body.id,
-    prerequisite:req.body.prereq,
-  }).
-  then((result) => {
-    console.log(result);
-    console.log("Inserted");
-    res.send(result);
-  });
+app.post("/publishCourse", (req, res) => {
+  knex("courses")
+    .insert({
+      courseName: req.body.courseName,
+      credits: req.body.credit,
+      bio: req.body.desc,
+      teacherId: req.body.id,
+      prerequisite: req.body.prereq,
+    })
+    .then((result) => {
+      console.log(result);
+      console.log("Inserted");
+      res.send(result);
+    });
 });
 
-app.get("/getCourseList",(req,res)=>{
-  knex("courses").join('user','teacherId','=','id').select('courseId','courseName','credits','bio','prerequisite','name','photo').then((result)=>{
-    console.log(result);
-    res.send(result);
-  });
-})
+app.get("/getCourseList", (req, res) => {
+  knex("courses")
+    .join("user", "teacherId", "=", "id")
+    .select(
+      "courseId",
+      "courseName",
+      "credits",
+      "bio",
+      "prerequisite",
+      "name",
+      "photo"
+    )
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    });
+});
 
-app.post("/enrollMe",(req,res)=>{
+app.post("/enrollMe", (req, res) => {
   knex("studies")
     .insert({
       studentId: req.body.studentId,
@@ -179,11 +233,11 @@ app.post("/enrollMe",(req,res)=>{
     })
     .then((result) => {
       console.log(result);
-      res.send('You are Successfully enrolled');
+      res.send("You are Successfully enrolled");
     });
-})
+});
 
-app.post("/getMyCourses",(req,res)=>{
+app.post("/getMyCourses", (req, res) => {
   knex("courses")
     .join("studies", "courses.courseId", "=", "studies.courseId")
     .where({ studentId: req.body.id })
@@ -200,16 +254,181 @@ app.post("/getMyCourses",(req,res)=>{
     .then((result) => {
       console.log(result);
       res.send(result);
-    });  
-  // knex("studies").where({studentId:req.body.id}).select('courseId').then((result)=>{
-  //   console.log(result);
-  //   res.send(result);
-  // })  
+    });
+});
+
+app.post("/getTeacherCourse", (req, res) => {
+  knex("courses")
+    .select("courseId", "courseName", "credits", "bio", "prerequisite")
+    .where({ teacherId: req.body.id })
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    });
+});
+
+app.post("/createAnnouncement", (req, res) => {
+  knex("announce")
+    .insert({
+      courseId: req.body.id,
+      announcement: req.body.announcement,
+    })
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    });
+});
+
+app.post("/getAnnouncement", (req, res) => {
+  // console.log(req.body.id);
+  knex("announce")
+    .select()
+    .where({ courseId: req.body.id })
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    });
+});
+
+/************************************ */
+// Quiz
+app.post("/createQuizInfo", (req, res) => {
+  knex("quiz")
+    .insert({
+      courseId: req.body.id,
+      title: req.body.title,
+      instruction: req.body.instruction,
+      topic: req.body.topic,
+      duration: req.body.duration,
+    })
+    .then((result) => {
+      console.log(result);
+      knex("quiz")
+        .max("quizId", { as: "id" })
+        .then((resu) => {
+          console.log(resu);
+          res.send(resu);
+        });
+    });
+});
+app.post("/getQuizInfo",(req,res)=>{
+  knex("quiz").where({ quizId: req.body.quizId }).select().then((result)=>{
+    res.send(result);
+  });
 })
+app.post("/getAllQuizes", (req, res) => {
+  knex("quiz")
+    .where({ courseId: req.body.id })
+    .select()
+    .then((result) => {
+      res.send(result);
+    });
+});
+// app.post("updateQuizStats",(req,res)=>{
+//   knex("quiz").where({quizId:req.body.quizId}).update({
+//     totalQues:req.body.totalQues,
+//     totlaMarks:req.body.totalMarks,
+//   }).then((result)=>{
+//     console.log(result);
+//     // res.send(result);
+//   })
+// })
+app.post("/addQues",(req,res)=>{
+  knex("quiz_question").insert(req.body).then((result)=>{
+    console.log(result);
+    console.log("Sucesfully Inserted");
+    knex("quiz").where({ quizId: req.body.quizId }).increment({
+      totalQues:1,
+      totalMarks:req.body.maxScore,
+    }).then((resu)=>{
+      console.log(resu);
+      res.send("Successfully added the question");
+    });
+  }).catch((err) => console.log(err));
+});
 
+app.post("/getQues",(req,res)=>{
+  console.log(req.body);
+  knex("quiz_question").where({quizId:req.body.quizId}).select().then((result)=>{
+    res.send(result);
+  }).catch((err) => console.log(err));
+});
+app.post("/editQuestion", (req, res) => {
+  knex("quiz_question")
+    .where({ questionId: req.body.questionId })
+    .update(req.body).then((result)=>{
+    res.send("hu")})
+    .catch((err) => console.log(err));
+});
+app.post("/updateTotalMarks",(req,res)=>{
+  knex("quiz")
+    .where({ quizId: req.body.quizId})
+    .increment({ totalMarks: req.body.diff })
+    .then((result) => {
+      res.send("hu");
+    })
+    .catch((err) => console.log(err));
+})
+// app.delete("/deleteQues/:questionNo", (req, res) => {
+//   console.log("hi server trying to delete");
+//   knex("quiz_question")
+//     .where("questionNo", req.params.questionNo)
+//     .del()
+//     .then((result) => {
+//       console.log(result);
+//       console.log("succesfuly deleted");
+//     });
+// });
+app.post("/deleteQues", (req, res) => {
+  console.log("hi server trying to delete");
+  knex("quiz_question")
+    .where({"questionId":req.body.questionId,
+  })
+    .del()
+    .then((result) => {
+      console.log(result);
+      console.log("succesfuly deleted");
+      knex("quiz")
+        .where({ quizId: req.body.quizId })
+        .increment({
+          totalQues: -1,
+          totalMarks: -(req.body.maxScore),
+        })
+        .then((resu) => {
+          console.log(resu);
+          res.send("Successfully deleted the question");
+        });
+    });
+});
 
-
-
+app.post("/updateMaxScore",(req,res)=>{
+  knex("quiz_question").where({ questionId: req.body.questionId }).update("maxScore",req.body.score).then((result)=>{
+    console.log(result);
+    knex("quiz")
+      .where({ quizId: req.body.quizId })
+      .increment({
+        totalMarks: req.body.diff,
+      })
+      .then((resu) => {
+        console.log(resu);
+        res.send("Updated successfully");
+      });
+  });
+})
+app.post("/updatePenaltyScore", (req, res) => {
+  knex("quiz_question")
+    .where({ questionId: req.body.questionId })
+    .update("penaltyScore", req.body.penaltyScore)
+    .then((result) => {
+      console.log(result);
+    });
+});
+app.post("/deleteQuiz",(req,res)=>{
+  knex('quiz').where({quizId:req.body.quizId}).del().then((result)=>{
+    console.log('deleted..');
+    res.send(200);
+  });
+})
 app.listen(3002, () => {
   console.log("listing on port 3002");
 });

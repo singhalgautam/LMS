@@ -211,7 +211,7 @@ p {
   font-size: 1rem;
   letter-spacing: var(--spacing);
   margin-top: 2rem;
-  margin-left: 0.5rem;
+  /* margin-left: 0.5rem; */
   margin-right: 0.5rem;
   cursor: pointer;
   transition: var(--transition);
@@ -226,6 +226,7 @@ p {
 .enroll {
   position: relative;
   height: 35px;
+  border-color: #9658fe;
   /* top: 50px; */
 }
 
@@ -577,3 +578,44 @@ p {
     height: 5em;
   }
 }
+
+/*****************************/
+
+/* nav-selection */
+
+.nav-selection {
+  text-align: center;
+  display: flex;
+  width: 60%;
+  justify-content: space-evenly;
+  margin: -2em auto 2em auto;
+}
+
+.nav-selection button {
+  margin: -17px -8.5px 0 -8.5px;
+  padding: 0 1.5em;
+  /* font-weight: bold; */
+}
+
+.form input {
+  background: white;
+  border: 1px solid rgb(205, 205, 206);
+  width: 20em;
+  height: 50px;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: large;
+}
+
+.form textarea {
+  width: 70vw;
+  height: 30vh;
+}
+
+.heading {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+
+

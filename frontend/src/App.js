@@ -6,6 +6,10 @@ import SideMenu from "./Components/Sidebar/SideMenu";
 import { MenuData } from "./Components/Sidebar/MenuData";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import SingleCourse from "./Components/SingleCourse/SingleCourse";
+import CreateQuiz from "./Components/SingleCourse/Quizes/CreateQuiz";
+import ManageQuiz from "./Components/SingleCourse/Quizes/ManageQuiz";
+import EditQuestion from "./Components/SingleCourse/Quizes/EditQuestion";
+import AttemptQuiz from "./Components/SingleCourse/Quizes/AttemptQuiz";
 function App() {
   const [loginStatus, setLoginStatus] = useState(true);
   // useEffect(() => {
@@ -34,6 +38,18 @@ function App() {
           ))}
           <Route exact path="/courses/:id">
             <SingleCourse />
+          </Route>
+          <Route exact path="/courses/:id/quiz">
+            <CreateQuiz />
+          </Route>
+          <Route exact path="/courses/:id/quiz/:quizId/">
+            <ManageQuiz />
+          </Route>
+          <Route exact path="/courses/:id/quiz/:quizId/:questionId">
+            <EditQuestion />
+          </Route>
+          <Route exact path="/courses/:id/quizAttempt/:quizId">
+            <AttemptQuiz />
           </Route>
         </div>
       </Router>

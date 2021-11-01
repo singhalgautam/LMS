@@ -6,6 +6,21 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const info = JSON.parse(localStorage.getItem("info"));
 
+  //profile
+  const [name, setName] = useState("");
+  const [contact, setContact] = useState("");
+  const [image, setImage] = useState(null);
+  useEffect(() => {
+    Axios.post("http://localhost:3002/getProfile", { id: info.id }).then(
+      (res) => {
+        setName(res.data[0].name);
+        if (res.data[0].photo) setImage(res.data[0].photo);
+        else setImage(user);
+        setContact(res.data[0].contact);
+      }
+    );
+  }, [info.id]);
+
   //courses
   const [loading, setLoading] = useState(false);
   const [courses, setCourses] = useState([]);
@@ -24,23 +39,9 @@ const AppProvider = ({ children }) => {
       });
   }, []);
 
-  //profile
-  const [name, setName] = useState("");
-  const [contact, setContact] = useState("");
-  const [image, setImage] = useState(null);
-  useEffect(() => {
-    Axios.post("http://localhost:3002/getProfile", { id: info.id }).then(
-      (res) => {
-        setName(res.data[0].name);
-        if (res.data[0].photo) setImage(res.data[0].photo);
-        else setImage(user);
-        setContact(res.data[0].contact);
-      }
-    );
-  }, [info.id]);
-
+  //studentEnrolledCourses
   const [myCoursesId, setmyCoursesId] = useState([]);
-  const [myCourseList,setMyCourseList]=useState([]);
+  const [myCourseList, setMyCourseList] = useState([]);
   useEffect(() => {
     setLoading(true);
     Axios.post("http://localhost:3002/getMyCourses", { id: info.id })
@@ -60,6 +61,27 @@ const AppProvider = ({ children }) => {
         setLoading(false);
       });
   }, [info.id]);
+
+  //teacherCourses
+  const [teacherCourseList,setTeacherCourseList]=useState([]);
+  useEffect(() => {
+    setLoading(true);
+     Axios.post("http://localhost:3002/getTeacherCourse", { id: info.id })
+       .then((res) => {
+         setTeacherCourseList(res.data);
+         setLoading(false);
+       })
+       .catch((err) => {
+         console.log(err);
+         setLoading(false);
+       });
+  }, [info.id]);
+
+
+
+
+
+
   return (
     <AppContext.Provider
       value={{
@@ -75,6 +97,7 @@ const AppProvider = ({ children }) => {
         myCoursesId,
         setmyCoursesId,
         myCourseList,
+        teacherCourseList,
       }}
     >
       {children}

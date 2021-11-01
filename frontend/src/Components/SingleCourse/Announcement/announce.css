@@ -1,0 +1,26 @@
+.announce-container {
+  margin: auto;
+  width: 60vw;
+}
+
+.announcWrapper {
+  display: inline-block;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  background-color: #fff;
+  border: solid 0.8px rgba(153, 153, 153, 0.459);
+  border-radius: 6px;
+  display: flex;
+}
+
+.announcWrapper i {
+  margin-right: 1rem;
+}
+
+
+
+/* .announceTime{
+  margin-left:-30em;
+} */

@@ -53,7 +53,7 @@
     font-weight: 500;
 }
 
-.form input{
+.form input {
     background: white;
     border: 1px solid rgb(205, 205, 206);
     width: 20em;
@@ -116,7 +116,7 @@ form a {
     text-align: center;
 }
 
-hr.hr-login{
+hr.hr-login {
     background-color: #fff;
     width: 300px;
     padding: 0;
@@ -146,6 +146,10 @@ hr.hr-login{
     color: #7436ff;
     box-shadow: 0 2px #7436ff;
     opacity: 1;
+}
+
+.role-btn:hover {
+    background-color: #ece3ff;
 }
 
 .role div {

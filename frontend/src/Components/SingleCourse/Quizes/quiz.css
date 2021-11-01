@@ -1,0 +1,251 @@
+.btn-quiz {
+    font-size: larger;
+}
+
+.btn-quiz i {
+    margin-right: 0.5em;
+}
+
+.showQuiz {
+    margin-top: 5em;
+}
+
+.btn-quiz:hover .link-btn {
+    color: #9658fe;
+}
+
+.create-container {
+    text-align: left;
+    margin: auto;
+}
+
+.quizForm {
+    margin: auto;
+    width: max-content;
+    /* margin-left: 8em;
+    margin-top: 2.5em; */
+}
+
+.quizForm .input-wrapper {
+    position: relative;
+    line-height: 14px;
+    margin: 0 10px;
+    /* width: 50em; */
+    /* display: inline-block; */
+}
+
+.quizForm label {
+    color: #bbb;
+    font-size: 1em;
+    text-transform: capitalize;
+    position: absolute;
+    z-index: 2;
+    left: 12px;
+    top: 17px;
+    padding: 0 2px;
+    pointer-events: none;
+    background: rgba(255, 255, 255);
+    transition: transform 100ms ease;
+    transform: translateY(-20px);
+}
+
+.quizForm input {
+    background: white;
+    border: 1px solid rgb(205, 205, 206);
+    border-radius: 4px;
+    width: 32em;
+    height: 50px;
+    padding: 0.25rem 0.5rem;
+    font-size: large;
+    border-radius: 4px;
+    /* position: relative; */
+    margin-bottom: 2em;
+}
+
+.quizForm input[type="time"] {
+    width: 36em;
+    height: 50px;
+}
+
+.quizForm textarea {
+    background: white;
+    border: 1px solid rgb(205, 205, 206);
+    width: 30em;
+    height: 20vh;
+    border-radius: 4px;
+    padding: 0.7rem 0.5rem;
+    font-size: larger;
+    border-radius: 4px;
+    /* position: relative; */
+    margin-bottom: 2em;
+}
+
+.quizForm input:invalid+label, .quizForm textarea:invalid+label, .quizForm input[type="time"]:invalid+label {
+    transform: translateY(0);
+}
+
+.quizForm input:focus+label, .quizForm textarea:focus+label, .quizForm input[type="time"]:focus+label {
+    color: #9658fe;
+    font-size: 13px;
+    background-color: hsl(210, 36%, 96%);
+    transform: translateY(-20px);
+}
+
+/* .quizForm button {
+    margin-left: 13em;
+} */
+
+.adjust-btn {
+    text-align: center;
+    margin: auto;
+}
+
+.create-container .btn-continue {
+    margin: auto;
+    text-align: right;
+}
+
+.create-container .btn-continue button {
+    margin-right: 7em;
+}
+
+.quiz-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 25vw;
+}
+
+.quiz-stats h5 {
+    font-weight: 400;
+    color: #bbb
+}
+
+.quiz-stats h4 {
+    font-weight: 400;
+}
+
+.btn-addques {
+    color: #9658fe;
+    background-color: #fff;
+    padding: 0.8em 4em;
+    border: 2px dashed #9558fe63;
+    border-radius: 8px;
+    font-size: larger;
+}
+
+.btn-addques i {
+    font-weight: 400;
+    margin-right: 0.6em;
+}
+
+.btn-addques:hover {
+    border-color: #9658fe;
+    transition: border-color 0.2s ease-in;
+}
+
+.ques-container {
+    width: 55vw;
+    border: solid 0.8px rgba(153, 153, 153, 0.459);
+    border-radius: 4px;
+    padding: 2em;
+    margin: 2em 0;
+}
+
+.single-ques {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ques-stats {
+    display: flex;
+    justify-content: space-between;
+    width: 35%;
+}
+
+.stats-wrapper {
+    display: flex;
+    height: fit-content;
+}
+
+.stats-wrapper label {
+    display: inline-block;
+    margin: 0;
+    padding: 0.6em;
+    width: 5em;
+    font-size: 12px;
+    line-height: 16px;
+    color: rgba(35, 31, 32, 0.7);
+    background-color: rgba(187, 187, 187, 0.144);
+    border-radius: 6px 0 0 6px;
+    border: solid 0.8px rgba(153, 153, 153, 0.459);
+}
+
+.stats-wrapper input {
+    margin: 0;
+    display: inline-block;
+    padding: 0.6em;
+    width: 5em;
+    border-radius: 0 6px 6px 0;
+    border: solid 0.8px rgba(153, 153, 153, 0.459);
+}
+
+.stats-wrapper input:hover {
+    border-color: black;
+}
+
+.ques-edit {
+    display: flex;
+    justify-content: space-between;
+    width: 8%;
+}
+
+.ques-edit i {
+    font-size: 1.2em;
+    color: rgba(102, 102, 102, 0.692);
+    transform: translateY(10px);
+}
+
+.instruction-pencil {
+    font-size: 0.5em;
+    margin-left: 1em;
+    color: rgba(102, 102, 102, 0.692);
+}
+
+.ques-edit i:hover, .instruction-pencil:hover {
+    color: black;
+}
+
+.question-content {
+    display: flex;
+    width: 40%;
+}
+
+.question-content p {
+    display: inline-block;
+    width: 100%;
+    overflow-wrap: break-word;
+}
+
+.createQues {
+    margin: auto;
+    text-align: center;
+    width: 40vw;
+}
+
+.btn-add-opt {
+    width: 37.5vw;
+    margin-bottom: 2em;
+}
+
+.opt-val-btn:hover .link-btn, .btn-edit:hover .link-btn {
+    color: #9658fe;
+}
+
+.del-quiz {
+    margin-left: 48em;
+    color: rgba(102, 102, 102, 0.692);
+}
+
+.del-quiz:hover {
+    color: rgb(194, 0, 0);
+}
