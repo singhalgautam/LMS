@@ -28,13 +28,13 @@ export const MenuData = [
     exact: true,
     link: <Courses />,
   },
-  {
-    name: "Calendar",
-    to: `/Calendar`,
-    iconClassName: "bi bi-calendar-plus",
-    exact: true,
-    link: <Calendar />,
-  },
+  // {
+  //   name: "Calendar",
+  //   to: `/Calendar`,
+  //   iconClassName: "bi bi-calendar-plus",
+  //   exact: true,
+  //   link: <Calendar />,
+  // },
   {
     name: "Doubts",
     to: `/doubts`,
@@ -47,13 +47,13 @@ export const MenuData = [
     // ],
   },
 
-  {
-    name: "Settings",
-    to: `/settings`,
-    iconClassName: "bi bi-nut",
-    exact: true,
-    link: <Settings />,
-  },
+  // {
+  //   name: "Settings",
+  //   to: `/settings`,
+  //   iconClassName: "bi bi-nut",
+  //   exact: true,
+  //   link: <Settings />,
+  // },
 
   {
     name: "Help",

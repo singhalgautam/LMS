@@ -6,6 +6,7 @@ function StudentQuiz({ id }) {
   const [quizList, setQuizList] = useState([]);
 
   useEffect(() => {
+    
     Axios.post("http://localhost:3002/getAllQuizes", { id }).then((res) => {
       setQuizList(res.data.reverse());
     });
@@ -36,7 +37,7 @@ const SingleQuiz = ({
   return (
     <div className="ques-container">
       <h3>{title}</h3>
-      <p>{instruction}</p>
+      {/* <p>{instruction}</p> */}
       <h4>Duration : {duration}</h4>
       <h4>Topic: {topic}</h4>
       <div className="quiz-stats">
@@ -51,8 +52,18 @@ const SingleQuiz = ({
       </div>
       <button className="btn btn-edit" style={{ marginTop: "0.5em" }}>
         <Link
-          to={`/courses/${courseId}/quizAttempt/${quizId}`}
           className="link-btn"
+          to={{
+            pathname: `/courses/${courseId}/quizAttempt/${quizId}`,
+            state: {
+              title: title,
+              topic: topic,
+              instruction: instruction,
+              duration: duration,
+              totalMarks,
+              totalQues,
+            },
+          }}
         >
           Attempt
         </Link>

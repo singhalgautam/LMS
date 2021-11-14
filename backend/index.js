@@ -181,7 +181,7 @@ app.post("/uploadFile", upload2.single("file"), (req, res) => {
 
 app.post("/getFile", (req, res) => {
   knex("file")
-    .select("file","file_name","fileId")
+    .select("file", "file_name", "fileId")
     .where({ courseId: req.body.courseId })
     .then((result) => res.send(result));
 });
@@ -311,11 +311,14 @@ app.post("/createQuizInfo", (req, res) => {
         });
     });
 });
-app.post("/getQuizInfo",(req,res)=>{
-  knex("quiz").where({ quizId: req.body.quizId }).select().then((result)=>{
-    res.send(result);
-  });
-})
+app.post("/getQuizInfo", (req, res) => {
+  knex("quiz")
+    .where({ quizId: req.body.quizId })
+    .select()
+    .then((result) => {
+      res.send(result);
+    });
+});
 app.post("/getAllQuizes", (req, res) => {
   knex("quiz")
     .where({ courseId: req.body.id })
@@ -333,42 +336,54 @@ app.post("/getAllQuizes", (req, res) => {
 //     // res.send(result);
 //   })
 // })
-app.post("/addQues",(req,res)=>{
-  knex("quiz_question").insert(req.body).then((result)=>{
-    console.log(result);
-    console.log("Sucesfully Inserted");
-    knex("quiz").where({ quizId: req.body.quizId }).increment({
-      totalQues:1,
-      totalMarks:req.body.maxScore,
-    }).then((resu)=>{
-      console.log(resu);
-      res.send("Successfully added the question");
-    });
-  }).catch((err) => console.log(err));
+app.post("/addQues", (req, res) => {
+  knex("quiz_question")
+    .insert(req.body)
+    .then((result) => {
+      console.log(result);
+      console.log("Sucesfully Inserted");
+      knex("quiz")
+        .where({ quizId: req.body.quizId })
+        .increment({
+          totalQues: 1,
+          totalMarks: req.body.maxScore,
+        })
+        .then((resu) => {
+          console.log(resu);
+          res.send("Successfully added the question");
+        });
+    })
+    .catch((err) => console.log(err));
 });
 
-app.post("/getQues",(req,res)=>{
+app.post("/getQues", (req, res) => {
   console.log(req.body);
-  knex("quiz_question").where({quizId:req.body.quizId}).select().then((result)=>{
-    res.send(result);
-  }).catch((err) => console.log(err));
+  knex("quiz_question")
+    .where({ quizId: req.body.quizId })
+    .select()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => console.log(err));
 });
 app.post("/editQuestion", (req, res) => {
   knex("quiz_question")
     .where({ questionId: req.body.questionId })
-    .update(req.body).then((result)=>{
-    res.send("hu")})
+    .update(req.body)
+    .then((result) => {
+      res.send("hu");
+    })
     .catch((err) => console.log(err));
 });
-app.post("/updateTotalMarks",(req,res)=>{
+app.post("/updateTotalMarks", (req, res) => {
   knex("quiz")
-    .where({ quizId: req.body.quizId})
+    .where({ quizId: req.body.quizId })
     .increment({ totalMarks: req.body.diff })
     .then((result) => {
       res.send("hu");
     })
     .catch((err) => console.log(err));
-})
+});
 // app.delete("/deleteQues/:questionNo", (req, res) => {
 //   console.log("hi server trying to delete");
 //   knex("quiz_question")
@@ -382,8 +397,7 @@ app.post("/updateTotalMarks",(req,res)=>{
 app.post("/deleteQues", (req, res) => {
   console.log("hi server trying to delete");
   knex("quiz_question")
-    .where({"questionId":req.body.questionId,
-  })
+    .where({ questionId: req.body.questionId })
     .del()
     .then((result) => {
       console.log(result);
@@ -392,7 +406,7 @@ app.post("/deleteQues", (req, res) => {
         .where({ quizId: req.body.quizId })
         .increment({
           totalQues: -1,
-          totalMarks: -(req.body.maxScore),
+          totalMarks: -req.body.maxScore,
         })
         .then((resu) => {
           console.log(resu);
@@ -401,20 +415,23 @@ app.post("/deleteQues", (req, res) => {
     });
 });
 
-app.post("/updateMaxScore",(req,res)=>{
-  knex("quiz_question").where({ questionId: req.body.questionId }).update("maxScore",req.body.score).then((result)=>{
-    console.log(result);
-    knex("quiz")
-      .where({ quizId: req.body.quizId })
-      .increment({
-        totalMarks: req.body.diff,
-      })
-      .then((resu) => {
-        console.log(resu);
-        res.send("Updated successfully");
-      });
-  });
-})
+app.post("/updateMaxScore", (req, res) => {
+  knex("quiz_question")
+    .where({ questionId: req.body.questionId })
+    .update("maxScore", req.body.score)
+    .then((result) => {
+      console.log(result);
+      knex("quiz")
+        .where({ quizId: req.body.quizId })
+        .increment({
+          totalMarks: req.body.diff,
+        })
+        .then((resu) => {
+          console.log(resu);
+          res.send("Updated successfully");
+        });
+    });
+});
 app.post("/updatePenaltyScore", (req, res) => {
   knex("quiz_question")
     .where({ questionId: req.body.questionId })
@@ -423,12 +440,50 @@ app.post("/updatePenaltyScore", (req, res) => {
       console.log(result);
     });
 });
-app.post("/deleteQuiz",(req,res)=>{
-  knex('quiz').where({quizId:req.body.quizId}).del().then((result)=>{
-    console.log('deleted..');
-    res.send(200);
+app.post("/deleteQuiz", (req, res) => {
+  knex("quiz")
+    .where({ quizId: req.body.quizId })
+    .del()
+    .then((result) => {
+      console.log("deleted..");
+      res.send(200);
+    });
+});
+
+app.post("/insertQuizResponse", (req, res) => {
+  knex("quiz_response")
+    .insert(req.body.arr)
+    .then((result) => {
+      knex("grade")
+        .insert({
+          quizId: req.body.quizId,
+          studentId: req.body.studentId,
+          score: req.body.score,
+        })
+        .then((resu) => {
+          console.log(resu);
+        });
+    });
+});
+
+app.post("/getScoreAndResponse", (req, res) => {
+  // knex("quiz_response AS qr").join("quiz_question As qq").on('qr.quizId','=','qq.quizId').andOn('qr.questionId','=','qq.questionId').andOn('qr.studentId','=',req.body.studentId).andOn('qr.quizId','=',req.body.quizId).select('questionName,maxScore,penaltyScore,answer,opt1,opt2,opt3,opt4,qq.questionId,response,marks')
+  const query = `select questionName,maxScore,penaltyScore,answer,opt1,opt2,opt3,opt4,qq.questionId,response,marks from quiz_response AS qr, quiz_question As qq where qr.quizId = qq.quizId and qr.questionId = qq.questionId and qr.studentId=${req.body.studentId} and qq.quizId=${req.body.quizId}`;
+  console.log(query);
+  knex.raw(query)
+  .then((result) => {
+    console.log(result);
+    res.send(result);
   });
-})
+});
+app.post("/getGrade", (req, res) => {
+  knex.raw(
+    `select title,duration,topic,totalQues,totalMarks,score from quiz,grade where quiz.quizId=grade.quizid and studentId=${req.body.studentId} and quiz.quizId=${req.body.quizId}`
+  ).then((result) => {
+    console.log(result);
+    res.send(result);
+  });
+});
 app.listen(3002, () => {
   console.log("listing on port 3002");
 });
