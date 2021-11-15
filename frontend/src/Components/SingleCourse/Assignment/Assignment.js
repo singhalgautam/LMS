@@ -3,15 +3,14 @@ import { useGlobalContext } from "../../../context";
 import TeacherAssignment from "./TeacherAssignment";
 import StudentAssignment from "./StudentAssignment";
 import './assignment.css';
-function Assignment() {
+function Assignment({id}) {
     const { info } = useGlobalContext();
-    let choice = <TeacherAssignment />;
+    let choice = <TeacherAssignment id={id} />;
     if (info.role === "Student") {
-      choice = <StudentAssignment />;
+      choice = <StudentAssignment id={id} />;
     }
     return (
         <div>
-           <h3>assignment</h3> 
            {choice}
         </div>
     )

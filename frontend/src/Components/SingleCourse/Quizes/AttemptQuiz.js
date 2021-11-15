@@ -29,7 +29,7 @@ function AttemptQuiz() {
     getQuizQuestion();
   }, [quizId]);
  
-  const handleSubmitAns = (e) => {
+  const handleSubmitAns = async(e) => {
     e.preventDefault();
     const arr=new Array(totalQues);
     var totalMarksScored=0;
@@ -48,9 +48,30 @@ function AttemptQuiz() {
        arr[i] = obj;
        totalMarksScored+=marks;
     });
-    // Axios.post("http://localhost:3002/insertQuizResponse",{arr,quizId,studentId:info.id,score:totalMarksScored});
-    history.replace(`/courses/${id}/quizAttempt/${quizId}/viewScore/${info.id}`);
+    await Axios.post("http://localhost:3002/insertQuizResponse", {
+      arr,
+      quizId,
+      studentId: info.id,
+      score: totalMarksScored,
+      courseId: id,
+    });
+    history.replace(
+      `/courses/${id}/quizAttempt/${quizId}/viewScore/${info.id}`
+    );
+    // return new Promise((resolve,reject)=>{
+    //   Axios.post("http://localhost:3002/insertQuizResponse", {
+    //     arr,
+    //     quizId,
+    //     studentId: info.id,
+    //     score: totalMarksScored,
+    //     courseId: id,
+    //   });
+    //   history.replace(`/courses/${id}/quizAttempt/${quizId}/viewScore/${info.id}`);
+    // })
   };
+
+
+
   if(loading){
     return <Loading/>
   }

@@ -182,7 +182,11 @@ p {
 }
 
 /* section */
-
+.alignment{
+  
+  margin:auto;
+  text-align: center;
+}
 .section, .container {
   width: 90vw;
   margin: 0 auto;

@@ -11,17 +11,7 @@ function Doubts() {
         <div className="ask-doubts">
           <h3>Ask A new Doubt</h3>
           <form className="form">
-            <select id="subject">
-              <option> ---Choose tutorial--- </option>
-              {CourseList.map((course) => {
-                return <option key={course.courseId}>course.courseName</option>;
-              })}
-              <option></option>
-              <option> Javatpoint </option>
-              <option> tutorialspoint </option>
-              <option> geeksforgeeks </option>
-            </select>
-            <label htmlFor="subject">Subject</label>
+            <label/>
           </form>
         </div>
       </header>

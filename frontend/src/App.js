@@ -11,6 +11,8 @@ import ManageQuiz from "./Components/SingleCourse/Quizes/ManageQuiz";
 import EditQuestion from "./Components/SingleCourse/Quizes/EditQuestion";
 import AttemptQuiz from "./Components/SingleCourse/Quizes/AttemptQuiz";
 import ViewScore from "./Components/SingleCourse/Quizes/ViewScore";
+import ViewSubmissions from "./Components/SingleCourse/Assignment/ViewSubmissions";
+import MySubmission from "./Components/SingleCourse/Assignment/MySubmission";
 function App() {
   const [loginStatus, setLoginStatus] = useState(true);
   // useEffect(() => {
@@ -52,8 +54,17 @@ function App() {
           <Route exact path="/courses/:id/quizAttempt/:quizId">
             <AttemptQuiz />
           </Route>
-          <Route exact path="/courses/:id/quizAttempt/:quizId/viewScore/:studentId">
+          <Route
+            exact
+            path="/courses/:id/quizAttempt/:quizId/viewScore/:studentId"
+          >
             <ViewScore />
+          </Route>
+          <Route exact path="/courses/:courseId/assignmentSubmission/">
+            <ViewSubmissions />
+          </Route>
+          <Route exact path="/courses/:courseId/mySubmission/">
+            <MySubmission />
           </Route>
         </div>
       </Router>

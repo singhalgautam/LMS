@@ -1,0 +1,95 @@
+.custom-assign-upload {
+  border: 8px solid #9658fe;
+  display: inline-block;
+  padding: 3px 0px;
+  cursor: pointer;
+  margin: auto;
+  height: 50px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  color: #9658fe;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background-color: hsl(210, 36%, 96%);
+}
+
+.custom-assign-upload p {
+  margin-top: 6px;
+  margin-right: 20px;
+  color: #9658fe;
+}
+
+form .ques-container label {
+  display: inline-block;
+  width: 11.5%;
+  margin-right: 1em;
+  text-align: right;
+}
+
+form .ques-container input {
+  margin-top: 2em;
+  width: 75%;
+  margin-right: 0;
+}
+
+.assign-heading {
+  font-weight: 400;
+  color: #7b7b94;
+}
+
+.mySubmissionHeader {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+}
+
+.mySubmissionHeader p {
+  font-size: 1.3em;
+  color: #9658fe;
+}
+
+.assign-comment {
+  height: 2em;
+  width: 75%;
+  background-color: #fff;
+}
+
+.std-up-file {
+  padding: 1em;
+  padding-bottom: 1em;
+  background-color: #fff;
+  border: solid 0.8px rgba(153, 153, 153, 0.459);
+  border-radius: 4px;
+  margin-bottom: 1em;
+  display: flex;
+  width: 74.5%;
+}
+
+.std-up-file i {
+  margin-right: 1em;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  overflow: hidden;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.avatar img {
+  max-width: 100%;
+  height: 100%;
+}
+
+.submittedStdFile {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  transform: translateY(8px);
+  margin-left: 1em;
+}
+

@@ -1,25 +1,59 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import Loading from "../../../Loading";
+import { useGlobalContext } from "../../../context";
+
 
 function StudentQuiz({ id }) {
-  const [quizList, setQuizList] = useState([]);
+  const {info}=useGlobalContext();
+  const [loading1, setLoading1] = useState(true);
+  const [loading2, setLoading2] = useState(true);
+  const [unattemptedQuizList, setUnattemptedQuizList] = useState([]);
+  const [attemptedQuizList, setAttemptedQuizList] = useState([]);
 
   useEffect(() => {
-    
-    Axios.post("http://localhost:3002/getAllQuizes", { id }).then((res) => {
-      setQuizList(res.data.reverse());
+    setLoading1(true);
+    Axios.post("http://localhost:3002/getAttemptedQuizes", {
+      id,
+      studentId: info.id,
+    }).then((res) => {
+      console.log(res.data[0]);
+      setAttemptedQuizList(res.data[0].reverse());
+      setLoading1(false);
     });
-  }, [id, quizList]);
-
+    setLoading2(true);
+    Axios.post("http://localhost:3002/getUnattemptedQuizes", {
+      id,
+      studentId: info.id,
+    }).then((res) => {
+      console.log(res.data[0]);
+      setUnattemptedQuizList(res.data[0].reverse());
+      setLoading2(false);
+    });
+  }, []);
+  
+  if(loading1 && loading2){
+    return <Loading/>
+  }
   return (
     <div className="quiz">
-      <div className="showQuiz">
-        <div className="heading">Attempt a new Quizes</div>
-        {quizList.map((quiz) => {
-          return <SingleQuiz key={quiz.quizId} {...quiz} />;
-        })}
-      </div>
+      {attemptedQuizList.length !== 0 && (
+        <div className="showQuiz">
+          <div className="heading">Attempted Quizes</div>
+          {attemptedQuizList.map((quiz) => {
+            return <SingleQuiz key={quiz.quizId} {...quiz} flag={true} />;
+          })}
+        </div>
+      )}
+      {unattemptedQuizList.length !== 0 && (
+        <div className="showQuiz">
+          <div className="heading">Attempt a new Quizes</div>
+          {unattemptedQuizList.map((quiz) => {
+            return <SingleQuiz key={quiz.quizId} {...quiz} flag={false} />;
+          })}
+        </div>
+      )}
     </div>
   );
 };
@@ -33,6 +67,9 @@ const SingleQuiz = ({
   duration,
   totalQues,
   totalMarks,
+  flag,
+  studentId,
+  score
 }) => {
   return (
     <div className="ques-container">
@@ -40,6 +77,7 @@ const SingleQuiz = ({
       {/* <p>{instruction}</p> */}
       <h4>Duration : {duration}</h4>
       <h4>Topic: {topic}</h4>
+      {flag && <h4>Your score : {score}/{totalMarks}</h4>}
       <div className="quiz-stats">
         <div>
           <h5>Total questions</h5>
@@ -51,22 +89,34 @@ const SingleQuiz = ({
         </div>
       </div>
       <button className="btn btn-edit" style={{ marginTop: "0.5em" }}>
-        <Link
-          className="link-btn"
-          to={{
-            pathname: `/courses/${courseId}/quizAttempt/${quizId}`,
-            state: {
-              title: title,
-              topic: topic,
-              instruction: instruction,
-              duration: duration,
-              totalMarks,
-              totalQues,
-            },
-          }}
-        >
-          Attempt
-        </Link>
+        {!flag && (
+          <Link
+            className="link-btn"
+            to={{
+              pathname: `/courses/${courseId}/quizAttempt/${quizId}`,
+              state: {
+                title: title,
+                topic: topic,
+                instruction: instruction,
+                duration: duration,
+                totalMarks,
+                totalQues,
+              },
+            }}
+          >
+            Attempt
+          </Link>
+        )}
+        {flag && (
+          <Link
+            className="link-btn"
+            to={{
+              pathname: `/courses/${courseId}/quizAttempt/${quizId}/viewScore/${studentId}`,
+            }}
+          >
+            Veiw Result
+          </Link>
+        )}
       </button>
     </div>
   );

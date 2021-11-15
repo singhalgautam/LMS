@@ -5,13 +5,11 @@ import Axios from "axios";
 
 function ViewScore() {
   const { id, quizId, studentId } = useParams();
-  const [loading1,setLoading1]=useState(true);
-  const [loading2,setLoading2]=useState(true);
+  const [loading,setLoading]=useState(true);
   const [responseList,setResponseList]=useState([]);
   const [quizStat,setQuizStat]=useState({});
   useEffect(()=>{
-    setLoading1(true);
-    setLoading2(true);
+    setLoading(true);
     Axios.post("http://localhost:3002/getScoreAndResponse", {
       studentId,
       quizId,
@@ -19,25 +17,23 @@ function ViewScore() {
       .then((res) => {
         console.log(res.data[0]);
         setResponseList(res.data[0]);
-        setLoading1(false);
       })
       .catch((err) => {
-        alert(err);
-        setLoading1(false);
-      });;
+        alert(err);;
+      });
     Axios.post("http://localhost:3002/getGrade", { studentId, quizId }).then(
       (res) => {
         console.log(res.data[0][0]);
         setQuizStat(res.data[0][0]);
-        setLoading2(false);
+        setLoading(false);
       }
     ).catch((err)=>{
       alert(err);
-      setLoading2(false);
+      setLoading(false);
     });
   },[quizId, studentId]);
 
-  if(loading1 && loading2){
+  if(loading){
     return <Loading/>
   }
   

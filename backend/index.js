@@ -165,7 +165,6 @@ const upload2 = multer({
 });
 app.post("/uploadFile", upload2.single("file"), (req, res) => {
   console.log(req.file);
-  console.log(req.body.courseId);
   let fileSrc = "http://localhost:3002/file/" + req.file.filename;
   knex("file")
     .insert({
@@ -187,7 +186,115 @@ app.post("/getFile", (req, res) => {
 });
 
 /*********************************** */
+//upload assignments
 
+const storage3 = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "./public/assignments/");
+  },
+  filename: (req, file, callback) => {
+    callback(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload3 = multer({
+  storage: storage3,
+});
+app.post("/uploadAssignment", upload3.single("file"), (req, res) => {
+  let fileSrc = "http://localhost:3002/assignments/" + req.file.filename;
+  knex("assignment")
+    .insert({
+      courseId: req.body.courseId,
+      file: fileSrc,
+      fileName: req.body.fileName,
+      title: req.body.title,
+      topic: req.body.topic,
+      deadline: req.body.deadline,
+    })
+    .then((result) => {
+      console.log(result);
+      console.log("file uploaded");
+    });
+});
+
+app.post("/getAssignments", (req, res) => {
+  knex("assignment")
+    .select()
+    .where({ courseId: req.body.id })
+    .then((result) => res.send(result));
+});
+
+/*************************************/
+// upload Submission assignments
+const storage4 = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "./public/StudentAssignmentSubmission/");
+  },
+  filename: (req, file, callback) => {
+    callback(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload4 = multer({
+  storage: storage4,
+});
+app.post("/uploadMyAssignment", upload4.single("file"), (req, res) => {
+  console.log(req.file);
+  let fileSrc =
+    "http://localhost:3002/StudentAssignmentSubmission/" + req.file.filename;
+  knex("assignment_submission")
+    .insert({
+      courseId: req.body.courseId,
+      studentId: req.body.studentId,
+      assignmentId: req.body.assignmentId,
+      file: fileSrc,
+      fileName: req.body.fileName,
+      roll: req.body.roll,
+      comment: req.body.comment,
+      late:req.body.late,
+    })
+    .then((result) => {
+      console.log(result);
+      console.log("file uploaded");
+      res.send('hi');
+    });
+});
+
+app.post("/deleteMyAssignment",(req,res)=>{
+  knex("assignment_submission").where({assignmentId:req.body.assignmentId})
+    .del()
+    .then((result) => {
+      console.log(result);
+      console.log("succesffuly deleted");
+      res.send('deleted..')
+    });
+})
+
+app.post("/getMyAssignments", (req, res) => {
+  knex("assignment_submission")
+    .where({
+      assignmentId: req.body.assignmentId,
+      studentId: req.body.studentId,
+    })
+    .select('file', 'fileName', 'comment', 'roll','late')
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    });
+});
+
+app.post("/viewStudentAssignmentSubmission",(req,res)=>{
+  const query = `select file,fileName,comment,roll,late,name,photo,assignment_submissionId from assignment_submission as ass, user where ass.studentId=user.id and user.role='Student' and ass.assignmentId=${req.body.assignmentId}`;
+  knex.raw(query).then((result)=>{
+    res.send(result);
+  }).then((err)=>{
+    console.log(err);
+  });
+});
+
+
+
+/********************************** */
 // Add new course
 
 app.post("/publishCourse", (req, res) => {
@@ -327,6 +434,19 @@ app.post("/getAllQuizes", (req, res) => {
       res.send(result);
     });
 });
+app.post("/getUnattemptedQuizes", (req, res) => {
+  const query = `select * from quiz where quizId not in (select quizId from grade where studentId=${req.body.studentId})`;
+  knex.raw(query)
+    .then((result) => {
+      res.send(result);
+    });
+});
+app.post("/getAttemptedQuizes",(req,res)=>{
+  const query= `select quiz.quizId, studentId, score, title, duration, topic, totalQues, totalMarks from quiz,grade where quiz.quizId=grade.quizId and courseId=${req.body.id} and studentId=${req.body.studentId}`;
+  knex.raw(query).then((result)=>{
+    res.send(result);
+  });
+});
 // app.post("updateQuizStats",(req,res)=>{
 //   knex("quiz").where({quizId:req.body.quizId}).update({
 //     totalQues:req.body.totalQues,
@@ -462,6 +582,7 @@ app.post("/insertQuizResponse", (req, res) => {
         })
         .then((resu) => {
           console.log(resu);
+          res.send('done');
         });
     });
 });
