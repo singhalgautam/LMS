@@ -23,53 +23,56 @@ function Help() {
         <h3>We've got you covered</h3>
       </div>
       <div className="wrapper">
-        {info.role!=='Student' && <><Accordion title="How to publish a course?">
-          Sunlight reaches Earth's atmosphere and is scattered in all directions
-          by all the gases and particles in the air. Blue light is scattered
-          more than the other colors because it travels as shorter, smaller
-          waves. This is why we see a blue sky most of the time.
-        </Accordion>
-        <Accordion title="Where to find my courses?">
-          It's really hot inside Jupiter! No one knows exactly how hot, but
-          scientists think it could be about 43,000°F (24,000°C) near Jupiter's
-          center, or core.
-        </Accordion>
-        <Accordion title="How to make quiz?">
-          A black hole is an area of such immense gravity that nothing -- not
-          even light -- can escape from it.
-        </Accordion>
-        <Accordion title="How to upload files ans assignments?">
-          A black hole is an area of such immense gravity that nothing -- not
-          even light -- can escape from it.
-        </Accordion>
-        <Accordion title="How to update your Profile?">
-          A black hole is an area of such immense gravity that nothing -- not
-          even light -- can escape from it.
-        </Accordion></>}
+        {info.role !== "Student" && (
+          <>
+            <Accordion title="How to publish a course?">
+              Just simply go through the course Section and fill out all the
+              detatils such as course name ,prerequesite,topic, etc
+            </Accordion>
+            <Accordion title="Where to find my courses?">
+              Go to dashboard section and there you will find all the courses
+              that had been published by you
+            </Accordion>
+            <Accordion title="How to make quiz?">
+              Go to respective course and click on quiz there you will find
+              button of add quiz click on it, then a page will appear where you
+              can make quiz by giving necessary detatils,etc
+            </Accordion>
+            <Accordion title="How to upload files ans assignments?">
+              Upload file by choosing from your computer and then click upload .
+            </Accordion>
+            <Accordion title="How to update your Profile?">
+              Go to Profile section in the sidebar and update neccessary feilds,
+              you can update name, contact details and profile photo only
+            </Accordion>
+          </>
+        )}
 
-        {info.role==='Student' && <><Accordion title="How can I enroll in a course?">
-          Sunlight reaches Earth's atmosphere and is scattered in all directions
-          by all the gases and particles in the air. Blue light is scattered
-          more than the other colors because it travels as shorter, smaller
-          waves. This is why we see a blue sky most of the time.
-        </Accordion>
-        <Accordion title="Where to find enrolled courses?">
-          It's really hot inside Jupiter! No one knows exactly how hot, but
-          scientists think it could be about 43,000°F (24,000°C) near Jupiter's
-          center, or core.
-        </Accordion>
-        <Accordion title="How to give quiz?">
-          A black hole is an area of such immense gravity that nothing -- not
-          even light -- can escape from it.
-        </Accordion>
-        <Accordion title="How to upload files ans assignments?">
-          A black hole is an area of such immense gravity that nothing -- not
-          even light -- can escape from it.
-        </Accordion>
-        <Accordion title="How to update your Profile?">
-          A black hole is an area of such immense gravity that nothing -- not
-          even light -- can escape from it.
-        </Accordion></>}
+        {info.role === "Student" && (
+          <>
+            <Accordion title="How can I enroll in a course?">
+              Just simply go through the course Section and choose the
+              interested code you like by clicking on enroll button, then you
+              can go to particular course by clicking on it.
+            </Accordion>
+            <Accordion title="Where to find enrolled courses?">
+              Go to dashboard section and there you will find all the courses
+              that had been enrolled by you. Go to respective courses by
+              clicking on it.
+            </Accordion>
+            <Accordion title="How to give quiz?">
+              Go to respective course and click on quiz there give respective
+              quiz
+            </Accordion>
+            <Accordion title="How to upload files ans assignments?">
+              Upload file by choosing from your computer and then click upload .
+            </Accordion>
+            <Accordion title="How to update your Profile?">
+              Go to Profile section in the sidebar and update neccessary feilds,
+              you can update name, contact details and profile photo only
+            </Accordion>
+          </>
+        )}
       </div>
     </div>
   );

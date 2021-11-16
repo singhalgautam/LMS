@@ -1,21 +1,81 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import { useGlobalContext } from "../../../context";
+import Loading from "../../../Loading";
 
 function StudentAssignment({id}) {
+  const { info } = useGlobalContext();
+  const [loading1, setLoading1] = useState(true);
+  const [loading2, setLoading2] = useState(true);
   const [assignmentList, setAssignmentList] = useState([]);
+  const [unAttemptedAssignmentList, setUnAttemptedAssignmentList] = useState([]);
+  const [attemptedAssignmentList, setAttemptedAssignmentList] = useState([]);
   useEffect(() => {
-      Axios.post("http://localhost:3002/getAssignments", { id }).then((res) => {
-      setAssignmentList(res.data);
+      setLoading1(true);
+      Axios.post("http://localhost:3002/getAttemptedAssignments", {
+        id,
+        studentId: info.id,
+      }).then((res) => {
+        console.log(res.data[0]);
+        setAttemptedAssignmentList(res.data[0].reverse());
+        setLoading1(false);
+      });
+      setLoading2(true);
+      Axios.post("http://localhost:3002/getUnAttemptedAssignments", {
+        id,
+        studentId: info.id,
+      }).then((res) => {
+        console.log(res.data[0]);
+        setUnAttemptedAssignmentList(res.data[0].reverse());
+        setLoading2(false);
       });
   }, []);
+
+  if (loading1 && loading2) {
+    return <Loading />;
+  }
+
   return (
     <div>
-      {assignmentList.length !== 0 && (
+      {attemptedAssignmentList.length === 0 &&
+        unAttemptedAssignmentList.length === 0 && (
+          <div className="no-item">
+            <h2>No work has been Assigned! </h2>
+            <div>
+              <img
+                style={{ height: "65vh", width: "40vw" }}
+                src="https://tinyurl.com/yj4sjbz4"
+                alt="gif"
+              />
+            </div>
+          </div>
+        )}
+      {unAttemptedAssignmentList.length !== 0 && (
         <div>
-          <div className="heading">Uploaded Assignment</div>
-          {assignmentList.map((assign) => {
-            return <SingleAssignment key={assign.assignmentId} {...assign} />;
+          <div className="heading">Pending Assignments</div>
+          {unAttemptedAssignmentList.map((assign) => {
+            return (
+              <SingleAssignment
+                key={assign.assignmentId}
+                {...assign}
+                flag={false}
+              />
+            );
+          })}
+        </div>
+      )}
+      {attemptedAssignmentList.length !== 0 && (
+        <div>
+          <div className="heading">Completed Assignments</div>
+          {attemptedAssignmentList.map((assign) => {
+            return (
+              <SingleAssignment
+                key={assign.assignmentId}
+                {...assign}
+                flag={true}
+              />
+            );
           })}
         </div>
       )}
@@ -30,6 +90,7 @@ const SingleAssignment = ({
   title,
   topic,
   deadline,
+  flag
 }) => {
   const time = deadline.slice(0, 10) + ", " + deadline.slice(-5) + " hr";
   return (
@@ -58,7 +119,7 @@ const SingleAssignment = ({
             },
           }}
         >
-          Attempt
+          {flag?"View Your Work":"Attempt"}
         </Link>
       </button>
     </div>

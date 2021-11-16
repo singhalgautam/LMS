@@ -1,12 +1,14 @@
 import React, { useState} from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { Link,useParams, useLocation } from "react-router-dom";
 import Announcement from './Announcement/Announcement';
 import Assignment from './Assignment/Assignment';
 import File from './File/File';
 import Quizes from './Quizes/Quizes';
+
 function SingleCourse() {
     const {id}=useParams();
     const location=useLocation();
+    const {name,courseName}=location.state;
     console.log(location.state);
     const choice = [
       <Announcement id={id} />,
@@ -17,10 +19,20 @@ function SingleCourse() {
     const [opt, setOpt] = useState(0);
     return (
       <main>
-        {/* <h1>{id}</h1>
-        <Link to="/" className="btn">
-          back to dashboard
-        </Link> */}
+        <div className="currentCourseAllInfo">
+          <Link to="/">
+            <div className="heading">
+              {name.length >= 18
+                ? name.slice(0, 12) + "..."
+                : name}
+            </div>
+            <h3>
+              {courseName.length >= 12
+                ? courseName.slice(0, 12) + "..."
+                : courseName}
+            </h3>
+          </Link>
+        </div>
         <header className="nav-selection">
           <button
             className={`role-btn ${opt === 0 && "active-btn"}`}

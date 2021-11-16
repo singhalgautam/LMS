@@ -68,7 +68,7 @@ const MyCourse = ({
                 pathname:`/courses/${courseId}`,
                 state:{
                   name:name,
-                  courseName:"courseName",
+                  courseName:courseName,
                 }
               }
             }

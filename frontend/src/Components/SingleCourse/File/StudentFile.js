@@ -13,7 +13,19 @@ function StudentFile({ id }) {
   return (
     <main>
       <div className="uploaded">
-        <h3>Uploaded Files</h3>
+        {uploadedFile.length === 0 && (
+          <div className="no-item">
+            <h2>No File has been Uploaded </h2>
+            <div>
+              <img
+                style={{ height: "60vh", width: "40vw" }}
+                src="https://ufile.io/assets/img/icons/file-types.svg"
+                alt="file"
+              />
+            </div>
+          </div>
+        )}
+        {uploadedFile.length !== 0 && <h3>Uploaded Files</h3>}
         {uploadedFile.map((file) => {
           return <SingleFile key={file.fileId} {...file} />;
         })}

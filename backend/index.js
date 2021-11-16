@@ -99,13 +99,13 @@ app.post("/api/v1/auth/google", (req, res) => {
   user.gmailRegister(req, res);
 });
 
-app.get("/logout", (req, res) => {
-  res.clearCookie("session");
-  res.clearCookie("session-token");
+app.get("/logout", async (req, res) => {
+  await res.clearCookie("session");
+  await res.clearCookie("session-token");
   if (req.session.user) {
     req.session.destroy();
   }
-  // res.redirect("/login");
+  await res.redirect("/login");
 });
 
 /*****************************************/
@@ -239,6 +239,18 @@ app.post("/getAssignments", (req, res) => {
     .select()
     .where({ courseId: req.body.id })
     .then((result) => res.send(result));
+});
+app.post("/getAttemptedAssignments",(req,res)=>{
+  const query = `select asg.assignmentId, asg.courseId, asg.file, asg.fileName, title, topic, deadline from assignment as asg,assignment_submission as ass where asg.assignmentId=ass.assignmentId and asg.courseId=${req.body.id} and studentId=${req.body.studentId}`;
+  knex.raw(query).then((result) => {
+    res.send(result);
+  });
+});
+app.post("/getUnAttemptedAssignments",(req,res)=>{
+  const query = `select * from assignment where assignmentId not in (select assignmentId from assignment_submission where studentId=${req.body.studentId}) and courseId=${req.body.id}`;
+  knex.raw(query).then((result) => {
+    res.send(result);
+  });
 });
 
 /*************************************/
@@ -456,7 +468,7 @@ app.post("/getAllQuizes", (req, res) => {
     });
 });
 app.post("/getUnattemptedQuizes", (req, res) => {
-  const query = `select * from quiz where quizId not in (select quizId from grade where studentId=${req.body.studentId})`;
+  const query = `select * from quiz where quizId not in (select quizId from grade where studentId=${req.body.studentId}) and courseId=${req.body.id}`;
   knex.raw(query)
     .then((result) => {
       res.send(result);

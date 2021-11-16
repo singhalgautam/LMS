@@ -14,9 +14,13 @@ function StudentAnnouncement({ id }) {
   return (
     <div style={{ textAlign: "center", marginTop: "5em" }}>
       {postAnnouncement.length === 0 && (
-        <div>
+        <div className="no-item">
           <h3>Stay tuned in for new Announcements</h3>
-          <img src={announcementImg} alt="announcementImg" />
+          <img
+            style={{ height: "60vh", width: "40vw" }}
+            src={announcementImg}
+            alt="announcementImg"
+          />
         </div>
       )}
       {postAnnouncement

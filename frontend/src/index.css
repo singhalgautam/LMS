@@ -182,11 +182,12 @@ p {
 }
 
 /* section */
-.alignment{
-  
-  margin:auto;
+
+.alignment {
+  margin: auto;
   text-align: center;
 }
+
 .section, .container {
   width: 90vw;
   margin: 0 auto;
@@ -621,5 +622,21 @@ p {
   font-weight: 500;
 }
 
+.no-item {
+  margin-top: 5.5em;
+  text-align: center;
+}
 
+.no-itemimg {
+  height: 40vh;
+  width: 40vw;
+  margin-top: 2em;
+}
 
+.currentCourseAllInfo {
+  position: absolute;
+}
+
+.currentCourseAllInfo :hover{
+  color:#9658fe
+}

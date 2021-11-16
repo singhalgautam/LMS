@@ -38,6 +38,18 @@ function StudentQuiz({ id }) {
   }
   return (
     <div className="quiz">
+      {attemptedQuizList.length === 0 && unattemptedQuizList.length === 0 && (
+        <div className="no-item">
+          <h2>No quizes has been posted </h2>
+          <div>
+            <img
+              style={{ height: "60vh", width: "40vw", marginTop: "2em" }}
+              src="https://tinyurl.com/2dj5sp47"
+              alt="quizphoto"
+            />
+          </div>
+        </div>
+      )}
       {attemptedQuizList.length !== 0 && (
         <div className="showQuiz">
           <div className="heading">Attempted Quizes</div>
