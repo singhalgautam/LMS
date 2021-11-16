@@ -7,7 +7,7 @@ import Axios from "axios";
 import { useGlobalContext } from "../../context";
 
 const SideMenu = (props) => {
-  const {image,info}=useGlobalContext();
+  const {image,name,info}=useGlobalContext();
   const [inactive, setInactive] = useState(false);
  
   useEffect(() => {
@@ -86,12 +86,12 @@ const SideMenu = (props) => {
       </div>
 
       <div className="side-menu-footer">
-        <div className="avatar">
+        <div className="profPic">
           {image && <img src={image} alt="user" />}
         </div>
         <div className="user-info">
           <div className="profile-info-wrapper">
-            <h5>{info.name}</h5>
+            <h5>{name}</h5>
             <p>{info.email}</p>
           </div>
           <i

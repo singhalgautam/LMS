@@ -40,6 +40,9 @@ app.use(
   })
 );
 
+/***********************************************/
+//login
+
 app.post("/userReg", (req, res) => {
   user.userRegister(req, res);
 });
@@ -147,8 +150,22 @@ app.post("/upload", upload.single("file"), (req, res) => {
     .then((result) => {
       console.log(result);
       console.log("file uploaded");
+      res.send('updated');
     });
-});
+  });
+  app.post("/updateProfile",(req,res)=>{
+    knex("user")
+    .where({ id: req.body.id })
+    .update({
+      contact: req.body.contact,
+      name: req.body.name,
+    })
+    .then((result) => {
+      console.log(result);
+      console.log("file uploaded");
+      res.send('updated');
+    });
+})
 /*************************************************** */
 // uploadFile
 const storage2 = multer.diskStorage({
@@ -374,6 +391,9 @@ app.post("/getTeacherCourse", (req, res) => {
     });
 });
 
+
+/***************************************************/
+//Announcement
 app.post("/createAnnouncement", (req, res) => {
   knex("announce")
     .insert({
@@ -396,6 +416,7 @@ app.post("/getAnnouncement", (req, res) => {
       res.send(result);
     });
 });
+
 
 /************************************ */
 // Quiz
@@ -605,6 +626,51 @@ app.post("/getGrade", (req, res) => {
     res.send(result);
   });
 });
+
+
+/*******************************************/
+//Doubt
+app.post("/askDoubt",(req,res)=>{
+  knex('doubt').insert(req.body).then((result)=>{
+    console.log(result);
+  });
+});
+
+app.get('/getDoubtList',(req,res)=>{
+  knex("doubt")
+    .join("user", "doubt.askerId", "=", "user.id")
+    .select(
+      "name",
+      "photo",
+      "doubtId",
+      "question",
+      "title",
+      "topic",
+      "status",
+      "askerId"
+    )
+    .then((result) => {
+      console.log(result);
+      res.send(result);
+    });
+})
+
+app.post("/addDoubtAnswer",(req,res)=>{
+  knex('doubt_ans').insert(req.body).then((result)=>{
+    console.log(result);
+    res.send('done');
+  })
+})
+app.post("/getDoubtAnswers",(req,res)=>{
+  const query=`select name,photo,doubt_ans,doubt_ansId from doubt_ans as ds, user where ds.replierId=user.id and doubtId=${req.body.doubtId}`;
+  knex.raw(query).then((result)=>{
+    res.send(result);
+  }).catch((err)=>{
+    console.log(err);
+  });
+});
+
+/*******************************************/
 app.listen(3002, () => {
   console.log("listing on port 3002");
 });

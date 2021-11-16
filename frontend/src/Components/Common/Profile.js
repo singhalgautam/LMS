@@ -19,18 +19,27 @@ function Profile() {
   const id=info.id;
   const uploadFile = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("fileName", fileName);
-    formData.append("id", id);
-    formData.append("name", name);
-    formData.append("contact", contact);
-    console.log(formData);
-    try {
-    const res = await Axios.post("http://localhost:3002/upload", formData);
-      console.log(res);
-    } catch (ex) {
-      console.log(ex);
+    if(file){
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("fileName", fileName);
+      formData.append("id", id);
+      formData.append("name", name);
+      formData.append("contact", contact);
+      console.log(formData);
+      try {
+      await Axios.post("http://localhost:3002/upload", formData).then((res)=>{
+        alert('Your profile is succesfully updated');
+      });   
+      } 
+      catch (ex) {
+        console.log(ex);
+      }
+    }
+    else{
+      Axios.post("http://localhost:3002/updateProfile", { id,contact, name }).then((res)=>{
+        alert("Your profile is succesfully updated");
+      });
     }
   };
   

@@ -23,7 +23,7 @@ function Help() {
         <h3>We've got you covered</h3>
       </div>
       <div className="wrapper">
-        {info.role==='Student' && <><Accordion title="How to publish a course?">
+        {info.role!=='Student' && <><Accordion title="How to publish a course?">
           Sunlight reaches Earth's atmosphere and is scattered in all directions
           by all the gases and particles in the air. Blue light is scattered
           more than the other colors because it travels as shorter, smaller
@@ -47,7 +47,7 @@ function Help() {
           even light -- can escape from it.
         </Accordion></>}
 
-        {info.role!=='Student' && <><Accordion title="How can I enroll in a course?">
+        {info.role==='Student' && <><Accordion title="How can I enroll in a course?">
           Sunlight reaches Earth's atmosphere and is scattered in all directions
           by all the gases and particles in the air. Blue light is scattered
           more than the other colors because it travels as shorter, smaller

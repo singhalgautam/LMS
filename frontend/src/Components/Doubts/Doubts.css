@@ -1,0 +1,52 @@
+.doubt-container {
+  width: 70vw;
+  border: solid 0.8px rgba(153, 153, 153, 0.459);
+  border-radius: 4px;
+  padding: 2em;
+  margin: 2em 0;
+}
+
+.doubt-container form .doubt-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2em;
+}
+
+.doubt-container form textarea {
+  width: 100%;
+}
+
+.btn-doubt {
+  /* padding: 1em; */
+  font-size: 1.2em;
+  margin-left: 42.5%;
+}
+
+.doubtAskerName {
+  font-size: smaller;
+  color: #7b7b94;
+  margin-top: 0.4em;
+}
+
+.doubtTopic {
+  color: #7b7b94;
+  font-size: 0.875rem;
+  margin-bottom: 0.8em;
+}
+
+.doubtTitle {
+  margin-bottom: 0.1em;
+}
+
+.doubtTitle a {
+  color: #000;
+}
+
+.doubtTitle a:hover {
+  color: #9658fe;
+}
+
+.doubt-answer {
+  width: 100%;
+  height: max-content
+}

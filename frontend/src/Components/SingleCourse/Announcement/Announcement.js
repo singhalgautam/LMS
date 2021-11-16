@@ -11,7 +11,6 @@ function Announcement({id}) {
     }
     return (
         <div>
-            {/* <h3>announcement</h3> */}
             {choice}
         </div>
     )

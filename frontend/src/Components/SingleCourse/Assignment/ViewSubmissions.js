@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams,useLocation } from "react-router-dom";
-import Loading from "../../../Loading";
 import Axios from "axios";
 import logo from "../../../assets/web-logo-light.jpg";
 
@@ -52,17 +51,15 @@ const SingleStudentFile=({file,fileName,comment,roll,late,name,photo})=>{
   }
   return (
     <div className="std-up-file">
-      <div className="avatar">
+      <div className="profPic">
         <img src={photo} alt="user" />
       </div>
       <br />
       <div className="submittedStdFile">
-        {/* <div>{roll} - {name}</div> */}
         <a href={file} target="_blank" title={fileName} rel="noreferrer">
-          {/* <i className="bi bi-file-text"></i> */}
           {roll} - {name}
         </a>
-        <p>{late===0 ? 'Turned In Late':'Turned In'}</p>
+        <p>{late === 0 ? "Turned In Late" : "Turned In"}</p>
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ import AttemptQuiz from "./Components/SingleCourse/Quizes/AttemptQuiz";
 import ViewScore from "./Components/SingleCourse/Quizes/ViewScore";
 import ViewSubmissions from "./Components/SingleCourse/Assignment/ViewSubmissions";
 import MySubmission from "./Components/SingleCourse/Assignment/MySubmission";
+import AnswerDoubt from "./Components/Doubts/AnswerDoubt";
 function App() {
   const [loginStatus, setLoginStatus] = useState(true);
   // useEffect(() => {
@@ -65,6 +66,9 @@ function App() {
           </Route>
           <Route exact path="/courses/:courseId/mySubmission/">
             <MySubmission />
+          </Route>
+          <Route exact path="/answerDoubt/">
+            <AnswerDoubt />
           </Route>
         </div>
       </Router>
