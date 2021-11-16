@@ -54,7 +54,16 @@ const MyCourse = ({
       </div>
       <div className="enroll">
         <button className="btn btn-enroll">
-          <Link to={`/courses/${courseId}`} className="link-btn">
+          <Link
+            to={{
+              pathname: `/courses/${courseId}`,
+              state: {
+                name: name,
+                courseName: courseName,
+              },
+            }}
+            className="link-btn"
+          >
             Go to course
           </Link>
         </button>
