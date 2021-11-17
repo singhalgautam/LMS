@@ -220,7 +220,7 @@ const upload3 = multer({
   storage: storage3,
 });
 app.post("/uploadAssignment", upload3.single("file"), (req, res) => {
-  let fileSrc = "http://localhost:3002/assignments/" + req.file.filename
+  let fileSrc = "http://localhost:3002/assignments/" + req.file.filename;
   knex("assignment")
     .insert({
       courseId: req.body.courseId,

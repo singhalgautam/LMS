@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+import fileImg from "../../../assets/file.svg";
 
 function TeacherFile({ id }) {
   const [file, setFile] = useState();
@@ -63,7 +64,19 @@ function TeacherFile({ id }) {
       </div>
 
       <div className="uploaded">
-        <h3>Uploaded Files</h3>
+        {uploadedFile.length === 0 && (
+          <div className="no-item">
+            <h2>No File has been Uploaded </h2>
+            <div>
+              <img
+                style={{ height: "60vh", width: "40vw" }}
+                src={fileImg}
+                alt="file"
+              />
+            </div>
+          </div>
+        )}
+        {uploadedFile.length !== 0 && <h3>Uploaded Files</h3>}
         {uploadedFile.map((file) => {
           return <SingleFile key={file.fileId} {...file} />;
         })}

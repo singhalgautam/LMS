@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import quizImg from "../../../assets/quiz.png";
 
 function TeacherQuiz({id}) {
   const [quizList,setQuizList]=useState([]);
@@ -23,7 +24,19 @@ function TeacherQuiz({id}) {
         </div>
 
         <div className="showQuiz">
-          <div className="heading">Previous Quizes</div>
+          {quizList.length===0 &&(
+        <div className="no-item">
+          <h2>No quizes has been posted </h2>
+          <div>
+            <img
+              style={{ height: "65vh", width: "40vw" }}
+              src={quizImg}
+              alt="quizphoto"
+            />
+          </div>
+        </div>
+      )}
+          {quizList.length!==0 && <div className="heading">Previous Quizes</div>}
           {quizList.map((quiz)=>{
             return <SingleQuiz key={quiz.quizId} {...quiz}/>
           })}

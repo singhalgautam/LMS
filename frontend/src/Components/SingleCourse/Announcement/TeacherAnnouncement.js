@@ -49,7 +49,10 @@ function TeacherAnnouncement({ id }) {
         <button className="btn">Post</button>
       </form>
       <br />
-      <div className="heading">Previous Announcements</div>
+      {postAnnouncement.length !== 0 && (
+        <div className="heading">Previous Announcements</div>
+      )}
+
       <br />
       {postAnnouncement
         .slice(0)
