@@ -7,7 +7,7 @@ import Axios from "axios";
 import { color } from "../Color";
 
 function CourseList() {
-  const { loading, courses, myCoursesId } = useGlobalContext();
+  const { loading, courses, myCoursesId,setcflag,cflag} = useGlobalContext();
   const [load, setLoad] = React.useState(true);
   React.useEffect(() => {
     setLoad(true);
@@ -29,7 +29,7 @@ function CourseList() {
     <section className="section">
       <div className="card-center">
         {courses.map((course) => {
-          return <Course key={course.courseId} {...course} />;
+          return <Course key={course.courseId} {...course} cflag={cflag} setcflag={setcflag}/>;
         })}
       </div>
     </section>
@@ -45,6 +45,8 @@ const Course = ({
   name,
   photo,
   enrollmentFlag,
+  setcflag,
+  cflag,
 }) => {
   const mod = color.length;
   const { info } = useGlobalContext();
@@ -69,10 +71,11 @@ const Course = ({
         // myNewCourses.splice(low, 0, courseId);
         // setmyCoursesId(myNewCourses);
         setStatus(afterEnrollment);
+        setcflag(!cflag);
       });
     }
   };
-  const beforeEnrolment = 'Enroll';
+  const beforeEnrolment = "Enroll";
   const afterEnrollment = (
     <Link
       to={{

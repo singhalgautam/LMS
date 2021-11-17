@@ -10,6 +10,7 @@ const AppProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [image, setImage] = useState(null);
+  const [cflag, setcflag] = useState(false);
   useEffect(() => {
     Axios.post("http://localhost:3002/getProfile", { id: info.id }).then(
       (res) => {
@@ -60,7 +61,7 @@ const AppProvider = ({ children }) => {
         console.log(err);
         setLoading(false);
       });
-  }, [info.id]);
+  }, [info.id,cflag]);
 
   //teacherCourses
   const [teacherCourseList,setTeacherCourseList]=useState([]);
@@ -98,6 +99,8 @@ const AppProvider = ({ children }) => {
         setmyCoursesId,
         myCourseList,
         teacherCourseList,
+        setcflag,
+        cflag,
       }}
     >
       {children}
