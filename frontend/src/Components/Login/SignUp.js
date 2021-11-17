@@ -29,6 +29,7 @@ const SignUp = () => {
           );
         })
         .catch((err) => {
+          alert('email is already registered');
           console.log(err);
         });
     } else {

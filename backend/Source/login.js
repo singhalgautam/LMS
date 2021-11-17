@@ -19,16 +19,24 @@ const userRegister = (req, res) => {
         password: hash,
         role: role,
       })
-      .then((result) => {
-        console.log(result);
-        console.log("Inserted");
-        res.send(result);
+      .then((err,result) => {
+        if (!err) {
+          console.log(result);
+          console.log("Inserted");
+          res.send(result);
+        } else {
+          req.flash("message", "The entry already exist."); //we send the flash msg
+          return res.redirect("/");
+        }
+      })
+      .then((err) => {
+        console.log(err);
       });
   });
 };
 
 const loginVerify = (req) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const email = req.body.email;
     const password = req.body.password;
     const role = req.body.role;
@@ -51,14 +59,14 @@ const loginVerify = (req) => {
               const token = jwt.sign({ id }, process.env.JWT_secret, {
                 expiresIn: 3000,
               });
-              req.session.user = result;
-              console.log(req.session.user);async () => {
-                // window.sessionStorage.clear();
-                // window.localStorage.clear();
-                props.setLoginStatus(false);
-                await Axios.get("http://localhost:3002/logout");
-                history.replace(`/`);
-              };
+              console.log(`abhinav: ${result[0]}`);
+              console.log(`done inse`);
+              const obj={
+                id,name,token
+              }
+              req.session.user = obj;
+              console.log(`abhinav: ${req.session.user}`);
+              console.log(`adone`);
               resolve({
                 auth: true,
                 token: token,

@@ -637,6 +637,13 @@ p {
   position: absolute;
 }
 
-.currentCourseAllInfo :hover{
-  color:#9658fe
+.currentCourseAllInfo :hover {
+  color: #9658fe
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  cursor: pointer !important;
+}
+input[type=number]::-webkit-outer-spin-button {
+  cursor: pointer !important;
 }

@@ -48,6 +48,7 @@ const SideMenu = (props) => {
     await Axios.get("http://localhost:3002/logout");
     history.replace(`/`);
     props.setLoginStatus(false);
+    localStorage.clear();
   };
 
   return (

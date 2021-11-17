@@ -6,8 +6,8 @@ function AddnewCourse() {
     const [desc,setDesc]=useState("");
     const [prereq,setPrereq]=useState("");
     const info = JSON.parse(localStorage.getItem("info"));
-    const handleSubmit=(e)=>{
-      Axios.post("http://localhost:3002/publishCourse",{
+    const handleSubmit=async (e)=>{
+      await Axios.post("http://localhost:3002/publishCourse",{
         courseName,credit,desc,prereq,id:info.id
       }).then((res)=>{
         alert('course is succesfully published');
@@ -40,7 +40,7 @@ function AddnewCourse() {
           />
           <label>Credit : </label>
           <input
-            type="text"
+            type="number"
             name="credit"
             id="credit"
             placeholder="Credit of this course"

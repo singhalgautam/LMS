@@ -3,6 +3,7 @@ import Axios from "axios";
 import "./App.css";
 import { AppProvider } from "./context";
 
+import Loading from "./Loading";
 import LandingPage from "./Components/Login/MainPage";
 import SideMenu from "./Components/Sidebar/SideMenu";
 import { MenuData } from "./Components/Sidebar/MenuData";
@@ -17,14 +18,20 @@ import ViewSubmissions from "./Components/SingleCourse/Assignment/ViewSubmission
 import MySubmission from "./Components/SingleCourse/Assignment/MySubmission";
 import AnswerDoubt from "./Components/Doubts/AnswerDoubt";
 function App() {
+  const [loading, setLoding] = useState(true);
   const [loginStatus, setLoginStatus] = useState(false);
+  Axios.defaults.withCredentials = true;
   useEffect(() => {
     Axios.get("http://localhost:3002/userVerification").then((response) => {
       console.log(response);
       setLoginStatus(response.data.loggedIn);
+      setLoding(false);
     });
   }, []);
 
+  if(loading){
+    return <Loading/>
+  }
   const InsideLogin = () => {
     const [inactive, setInactive] = useState(false);
     return (

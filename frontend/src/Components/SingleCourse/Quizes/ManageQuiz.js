@@ -125,6 +125,7 @@ const SingleQuestion = ({
   answer,
 }) => {
   const [score,setScore]=useState(maxScore);
+  const [scoreHelper,setScoreHelper]=useState(maxScore);
   const [penalty,setPenalty]=useState(penaltyScore);
   const handleDelete = () => {
     // Axios.delete(`http://localhost:3002/deleteQues"/${questionId}`);
@@ -140,11 +141,13 @@ const SingleQuestion = ({
   };
  
   const handleMaxScore = (e) => {
-    setScore(e.target.value);
     if (e.target.value !== "") {
-      console.log(e.target.value);
-      const diff = e.target.value - score;
-      console.log(`diff : ${diff}`);
+      // console.log(e.target.value);
+      const diff = e.target.value - scoreHelper;
+      // console.log(`score:${score}`);
+      // console.log(`diff : ${diff}`);
+      setScore(e.target.value);
+      setScoreHelper(e.target.value);
       console.log(score);
       Axios.post("http://localhost:3002/updateMaxScore", {
         questionId,
@@ -154,6 +157,9 @@ const SingleQuestion = ({
       }).then((res) => {
         getNewQuizInfo();
       });
+    }
+    else{
+      setScore(e.target.value);
     }
   };
   const handlePenaltyScore=(e)=>{
