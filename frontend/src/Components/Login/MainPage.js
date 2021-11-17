@@ -5,9 +5,9 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 
 export default function MainPage({setLoginStatus}) {
-  const [login, setLogin] = useState(false);
-  const [message, setMessage] = useState("Already have an account?");
-  const [option, setOption] = useState("LOGIN");
+  const [login, setLogin] = useState(true);
+  const [message, setMessage] = useState("Don't you have an account?");
+  const [option, setOption] = useState("SIGN UP");
   const optionHandler = () => {
     if (!login) {
       setMessage("Don't you have an account?");

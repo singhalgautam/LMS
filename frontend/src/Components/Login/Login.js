@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import gmail from "../../assets/gmail.png";
 import Axios from "axios";
-import {GoogleLogin} from "react-google-login";
+// import {GoogleLogin} from "react-google-login";
 
 const Login = ({ setLoginStatus }) => {
   const [email, setEmail] = useState("");
@@ -21,47 +21,52 @@ const Login = ({ setLoginStatus }) => {
       Axios.post("http://localhost:3002/userVerification", obj)
         .then((response) => {
           console.log(response.data);
-          const infoObj = {
-            token: response.data.token,
-            id: response.data.id,
-            name: response.data.name,
-            email: response.data.email,
-            role: response.data.role,
-          };
-          localStorage.setItem("info", JSON.stringify(infoObj));
-          setLoginStatus(response.data.auth);
+          if(response.data.auth){
+            const infoObj = {
+              token: response.data.token,
+              id: response.data.id,
+              name: response.data.name,
+              email: response.data.email,
+              role: response.data.role,
+            };
+            localStorage.setItem("info", JSON.stringify(infoObj));
+            setLoginStatus(response.data.auth);
+          }
+          else{
+            alert("Wrong email or password or check your role!!")
+          }
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
-      alert("Enter both username and password!!");
+      alert("Enter both email and password!!");
     }
   };
-  const onLoginSuccess = (googleData) => {
-    Axios.post("http://localhost:3002/api/v1/auth/google/verify", {
-      token: googleData.tokenId,
-      role: roleStudent === true ? "Student" : "Teacher",
-    })
-      .then((response) => {
-        console.log("Login Success99:", response);
-        const infoObj = {
-          token: response.data.token,
-          id:response.data.id,
-          name: response.data.name,
-          email: response.data.email,
-          role:response.data.role,
-        };
-        localStorage.setItem("info", JSON.stringify(infoObj));
-        setLoginStatus(true);
-      })
-      .catch((err) => {
-        alert("user does'nt exist, Please register!");
-        console.log(err);
-      });
+  // const onLoginSuccess = (googleData) => {
+  //   Axios.post("http://localhost:3002/api/v1/auth/google/verify", {
+  //     token: googleData.tokenId,
+  //     role: roleStudent === true ? "Student" : "Teacher",
+  //   })
+  //     .then((response) => {
+  //       console.log("Login Success99:", response);
+  //       const infoObj = {
+  //         token: response.data.token,
+  //         id:response.data.id,
+  //         name: response.data.name,
+  //         email: response.data.email,
+  //         role:response.data.role,
+  //       };
+  //       localStorage.setItem("info", JSON.stringify(infoObj));
+  //       setLoginStatus(true);
+  //     })
+  //     .catch((err) => {
+  //       alert("user does'nt exist, Please register!");
+  //       console.log(err);
+  //     });
    
-    // store returned user somehow
-  };
+  //   // store returned user somehow
+  // };
 
   // const onLoginSuccess = (res) => {
   //   console.log("Login Success:", res.profileObj);
@@ -122,7 +127,7 @@ const Login = ({ setLoginStatus }) => {
           Login
         </button>
         <hr className="hr-login" />
-        <div className="gmail">
+        {/* <div className="gmail">
           <GoogleLogin
             clientId="552682266934-gqdhnqb14ksoib7tdl4c1716rs2ija5s.apps.googleusercontent.com"
             buttonText="Login"
@@ -131,7 +136,7 @@ const Login = ({ setLoginStatus }) => {
             cookiePolicy={"single_host_origin"}
             // isSignedIn={true}
           />
-        </div>
+        </div> */}
       </form>
     </main>
   );

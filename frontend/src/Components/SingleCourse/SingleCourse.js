@@ -7,9 +7,9 @@ import Quizes from './Quizes/Quizes';
 
 function SingleCourse() {
     const {id}=useParams();
-    const location=useLocation();
-    const {name,courseName}=location.state;
-    console.log(location.state);
+    // const location=useLocation();
+    // const {name,courseName}=location.state;
+    // console.log(location.state);
     const choice = [
       <Announcement id={id} />,
       <Assignment id={id} />,
@@ -19,20 +19,20 @@ function SingleCourse() {
     const [opt, setOpt] = useState(0);
     return (
       <main>
-        <div className="currentCourseAllInfo">
+        {/* <div className="currentCourseAllInfo">
           <Link to="/">
             <div className="heading">
-              {name.length >= 18
-                ? name.slice(0, 12) + "..."
+              {name.length >= 20
+                ? name.slice(0, 20) + "..."
                 : name}
             </div>
-            <h3>
-              {courseName.length >= 12
-                ? courseName.slice(0, 12) + "..."
+            <h4>
+              {courseName.length >= 20
+                ? courseName.slice(0, 20) + "..."
                 : courseName}
-            </h3>
+            </h4>
           </Link>
-        </div>
+        </div> */}
         <header className="nav-selection">
           <button
             className={`role-btn ${opt === 0 && "active-btn"}`}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import logo from "../../assets/web-logo-light.jpg";
 import MenuItem from "./MenuItem";
 import { MenuData } from "./MenuData";
@@ -7,6 +8,7 @@ import Axios from "axios";
 import { useGlobalContext } from "../../context";
 
 const SideMenu = (props) => {
+  const history=useHistory();
   const {image,name,info}=useGlobalContext();
   const [inactive, setInactive] = useState(false);
  
@@ -39,7 +41,14 @@ const SideMenu = (props) => {
       });
     });
   }, []);
-  
+
+  const handleLogout = async () => {
+    // window.sessionStorage.clear();
+    // window.localStorage.clear();
+    await Axios.get("http://localhost:3002/logout");
+    history.replace(`/`);
+    props.setLoginStatus(false);
+  };
 
   return (
     <div className={`side-menu ${inactive ? "inactive" : ""}`}>
@@ -96,12 +105,7 @@ const SideMenu = (props) => {
           </div>
           <i
             className="bi bi-box-arrow-right"
-            onClick={() => {
-              // window.sessionStorage.clear();
-              // window.localStorage.clear();
-              props.setLoginStatus(false);
-              Axios.get("http://localhost:3002/logout");
-            }}
+            onClick={handleLogout}
           ></i>
         </div>
       </div>

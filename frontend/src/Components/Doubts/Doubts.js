@@ -19,7 +19,7 @@ function Doubts() {
       console.log(res.data);
       setDoubtList(res.data);
     });
-  },[])
+  },[]);
 
   const askDoubtHandler=()=>{
     Axios.post("http://localhost:3002/askDoubt",{

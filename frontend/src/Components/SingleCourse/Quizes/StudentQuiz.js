@@ -3,7 +3,7 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 import Loading from "../../../Loading";
 import { useGlobalContext } from "../../../context";
-
+import quizImg from "../../../assets/quiz.png";
 
 function StudentQuiz({ id }) {
   const {info}=useGlobalContext();
@@ -43,8 +43,8 @@ function StudentQuiz({ id }) {
           <h2>No quizes has been posted </h2>
           <div>
             <img
-              style={{ height: "60vh", width: "40vw", marginTop: "2em" }}
-              src="https://tinyurl.com/2dj5sp47"
+              style={{ height: "65vh", width: "40vw" }}
+              src={quizImg}
               alt="quizphoto"
             />
           </div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import "./App.css";
+import { AppProvider } from "./context";
+
 import LandingPage from "./Components/Login/MainPage";
 import SideMenu from "./Components/Sidebar/SideMenu";
 import { MenuData } from "./Components/Sidebar/MenuData";
@@ -15,13 +17,13 @@ import ViewSubmissions from "./Components/SingleCourse/Assignment/ViewSubmission
 import MySubmission from "./Components/SingleCourse/Assignment/MySubmission";
 import AnswerDoubt from "./Components/Doubts/AnswerDoubt";
 function App() {
-  const [loginStatus, setLoginStatus] = useState(true);
-  // useEffect(() => {
-  //   Axios.get("http://localhost:3002/userVerification").then((response) => {
-  //     console.log(response);
-  //     setLoginStatus(response.data.loggedIn);
-  //   });
-  // }, []);
+  const [loginStatus, setLoginStatus] = useState(false);
+  useEffect(() => {
+    Axios.get("http://localhost:3002/userVerification").then((response) => {
+      console.log(response);
+      setLoginStatus(response.data.loggedIn);
+    });
+  }, []);
 
   const InsideLogin = () => {
     const [inactive, setInactive] = useState(false);
@@ -75,7 +77,11 @@ function App() {
     );
   };
   let showView = <LandingPage setLoginStatus={setLoginStatus} />;
-  if (loginStatus) showView = <InsideLogin />;
+  if (loginStatus) showView = (
+    <AppProvider>
+      <InsideLogin />
+    </AppProvider>
+  );
   return <div>{showView}</div>;
 }
 

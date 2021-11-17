@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 // import gmail from "../../assets/gmail.png";
 import Axios from "axios";
-import { GoogleLogin } from "react-google-login";
+// import { GoogleLogin } from "react-google-login";
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,22 +35,22 @@ const SignUp = () => {
       alert("All feilds are mandatory!!");
     }
   };
-  const onSignupSuccess = (googleData) => {
-    Axios.post("http://localhost:3002/api/v1/auth/google", {
-      token: googleData.tokenId,
-      role: roleStudent === true ? "Student" : "Teacher",
-    }).then((response) => {
-      console.log(response);
-      alert(
-        `You are succesfuly registered as ${
-          roleStudent === true ? "student" : "teacher"
-        }`
-      );
-    });
-  };
-  const onSignupFailure=(res)=>{
-    console.log("Oops! Regestration Failed:", res);
-  }
+  // const onSignupSuccess = (googleData) => {
+  //   Axios.post("http://localhost:3002/api/v1/auth/google", {
+  //     token: googleData.tokenId,
+  //     role: roleStudent === true ? "Student" : "Teacher",
+  //   }).then((response) => {
+  //     console.log(response);
+  //     alert(
+  //       `You are succesfuly registered as ${
+  //         roleStudent === true ? "student" : "teacher"
+  //       }`
+  //     );
+  //   });
+  // };
+  // const onSignupFailure=(res)=>{
+  //   console.log("Oops! Regestration Failed:", res);
+  // }
   return (
     <main className="form-box">
       <h2>Join Now !</h2>
@@ -107,9 +107,7 @@ const SignUp = () => {
         </button>
 
         <hr />
-        <div className="gmail">
-          {/* <p>Sign Up with </p>
-          <img className="gmail-logo" src={gmail} alt="gmail-logo" /> */}
+        {/* <div className="gmail">
           <GoogleLogin
             clientId="552682266934-gqdhnqb14ksoib7tdl4c1716rs2ija5s.apps.googleusercontent.com"
             buttonText="Sign up"
@@ -117,7 +115,7 @@ const SignUp = () => {
             onFailure={onSignupFailure}
             cookiePolicy={"single_host_origin"}
           />
-        </div>
+        </div> */}
       </form>
     </main>
   );

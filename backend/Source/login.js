@@ -49,10 +49,16 @@ const loginVerify = (req) => {
               const name = result[0].name;
               console.log(role);
               const token = jwt.sign({ id }, process.env.JWT_secret, {
-                expiresIn: 300,
+                expiresIn: 3000,
               });
               req.session.user = result;
-              console.log(req.session.user);
+              console.log(req.session.user);async () => {
+                // window.sessionStorage.clear();
+                // window.localStorage.clear();
+                props.setLoginStatus(false);
+                await Axios.get("http://localhost:3002/logout");
+                history.replace(`/`);
+              };
               resolve({
                 auth: true,
                 token: token,

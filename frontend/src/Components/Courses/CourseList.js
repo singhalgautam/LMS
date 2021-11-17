@@ -74,7 +74,16 @@ const Course = ({
   };
   const beforeEnrolment = 'Enroll';
   const afterEnrollment = (
-    <Link to={`/courses/${courseId}`} className="link-btn">
+    <Link
+      to={{
+        pathname: `/courses/${courseId}`,
+        state: {
+          name: name,
+          courseName: courseName,
+        },
+      }}
+      className="link-btn"
+    >
       Go to course
     </Link>
   );

@@ -3,6 +3,7 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../../../context";
 import Loading from "../../../Loading";
+import assignmentImg from "../../../assets/assignment.png"
 
 function StudentAssignment({id}) {
   const { info } = useGlobalContext();
@@ -45,7 +46,7 @@ function StudentAssignment({id}) {
             <div>
               <img
                 style={{ height: "65vh", width: "40vw" }}
-                src="https://tinyurl.com/yj4sjbz4"
+                src={assignmentImg}
                 alt="gif"
               />
             </div>

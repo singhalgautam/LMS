@@ -1,25 +1,37 @@
-import React from 'react'
+import React from "react";
 import Loading from "../../Loading";
 import user from "../../assets/user.png";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useGlobalContext } from "../../context";
 import { color } from "../Color";
-
+import emptyImg from "../../assets/emptydashboard.jpg";
 function StudentDashboard() {
-    const { loading, myCourseList } = useGlobalContext();
-    
-    if (loading) {
-      return <Loading />;
-    }
-    return (
-      <section className="section">
-        <div className="card-center">
-          {myCourseList.map((course) => {
-            return <MyCourse key={course.courseId} {...course} />;
-          })}
+  const { loading, myCourseList } = useGlobalContext();
+
+  if (loading) {
+    return <Loading />;
+  }
+  return (
+    <section className="section">
+      {myCourseList.length === 0 && (
+        <div className="no-item" style={{marginTop:"1.5em"}} >
+          <h2>Enroll in a course from course-section </h2>
+          <div>
+            <img
+              style={{ height: "50vh", width: "40vw",marginTop:"1.5em" }}
+              src={emptyImg}
+              alt="file"
+            />
+          </div>
         </div>
-      </section>
-    );
+      )}
+      <div className="card-center">
+        {myCourseList.map((course) => {
+          return <MyCourse key={course.courseId} {...course} />;
+        })}
+      </div>
+    </section>
+  );
 }
 
 const MyCourse = ({
@@ -63,15 +75,13 @@ const MyCourse = ({
         <button className="btn btn-enroll">
           <Link
             // onClick={handleLink}
-            to={
-              {
-                pathname:`/courses/${courseId}`,
-                state:{
-                  name:name,
-                  courseName:courseName,
-                }
-              }
-            }
+            to={{
+              pathname: `/courses/${courseId}`,
+              state: {
+                name: name,
+                courseName: courseName,
+              },
+            }}
             className="link-btn"
             // state={{name: courseName }}
           >
@@ -81,5 +91,5 @@ const MyCourse = ({
       </div>
     </article>
   );
-};;
-export default StudentDashboard
+};
+export default StudentDashboard;

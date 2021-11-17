@@ -78,10 +78,10 @@ const Answer = ({
           <div className="ques-number">Question {num + 1}</div>
             <div className="kept-marks">
               {marks !== maxScore && (
-                <i class="bi bi-x" style={{ color: "red" }}></i>
+                <i className="bi bi-x" style={{ color: "red" }}></i>
               )}
               {marks === maxScore && (
-                <i class="bi bi-check2" style={{ color: "green" }}></i>
+                <i className="bi bi-check2" style={{ color: "green" }}></i>
               )}
               <div>
                 {marks}/{maxScore}

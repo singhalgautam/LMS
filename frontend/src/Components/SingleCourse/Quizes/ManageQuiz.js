@@ -96,7 +96,12 @@ function ManageQuiz() {
         );
       })}
       <button className="opt-val-btn">
-        <Link to={`/courses/${id}`} className="link-btn">
+        <Link to={
+              {
+                pathname:`/courses/${id}`,
+                
+              }}
+              className="link-btn">
           Publish
         </Link>
       </button>
@@ -281,7 +286,7 @@ const CreateQuestion = ({
         <h3 style={{ marginLeft: "6.5em", marginBottom: "2em" }}>
           Create Question
         </h3>
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <textarea
             type="text"
             id="quesName"
@@ -291,7 +296,7 @@ const CreateQuestion = ({
           />
           <label htmlFor="quesName">Question</label>
         </div>
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <textarea
             type="text"
             id="opt1"
@@ -301,7 +306,7 @@ const CreateQuestion = ({
           />
           <label htmlFor="opt1">opt1</label>
         </div>
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <textarea
             type="text"
             id="opt2"
@@ -320,7 +325,7 @@ const CreateQuestion = ({
         </div>
 
         {extraOpt[0] === 1 && (
-          <div class="input-wrapper">
+          <div className="input-wrapper">
             <textarea
               type="text"
               id="opt3"
@@ -340,7 +345,7 @@ const CreateQuestion = ({
         </div>
 
         {extraOpt[1] === 1 && (
-          <div class="input-wrapper">
+          <div className="input-wrapper">
             <textarea
               type="text"
               id="opt4"
@@ -351,7 +356,7 @@ const CreateQuestion = ({
             <label htmlFor="opt4">opt4</label>
           </div>
         )}
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <input
             type="number"
             id="answer"
@@ -361,7 +366,7 @@ const CreateQuestion = ({
           />
           <label htmlFor="answer">Correct Opt</label>
         </div>
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <input
             type="number"
             id="maxScore"
@@ -371,7 +376,7 @@ const CreateQuestion = ({
           />
           <label htmlFor="maxScore">Max Score</label>
         </div>
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <input
             type="number"
             id="penaltyScore"

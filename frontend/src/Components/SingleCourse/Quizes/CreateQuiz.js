@@ -34,7 +34,7 @@ function CreateQuiz() {
           <h3 style={{ marginLeft: "7.5em", marginBottom: "2em" }}>
             Create Quiz
           </h3>
-          <div class="input-wrapper">
+          <div className="input-wrapper">
             <input
               type="text"
               id="title"
@@ -45,7 +45,7 @@ function CreateQuiz() {
             <label htmlFor="title">Title</label>
           </div>
 
-          <div class="input-wrapper">
+          <div className="input-wrapper">
             <textarea
               type="text"
               id="instruction"
@@ -56,7 +56,7 @@ function CreateQuiz() {
             <label htmlFor="instruction">instructions</label>
           </div>
 
-          <div class="input-wrapper">
+          <div className="input-wrapper">
             <input
               type="text"
               id="topic"

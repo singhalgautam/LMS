@@ -82,7 +82,7 @@ function EditQuestion(){
         <h3 style={{ marginLeft: "6.5em", marginBottom: "2em" }}>
           Edit Question
         </h3>
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <textarea
             type="text"
             id="quesName"
@@ -92,7 +92,7 @@ function EditQuestion(){
           />
           <label htmlFor="quesName">Question</label>
         </div>
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <textarea
             type="text"
             id="option1"
@@ -102,7 +102,7 @@ function EditQuestion(){
           />
           <label htmlFor="option1">option1</label>
         </div>
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <textarea
             type="text"
             id="option2"
@@ -125,7 +125,7 @@ function EditQuestion(){
         </div>
 
         {extraOpt[0] === true && (
-          <div class="input-wrapper">
+          <div className="input-wrapper">
             <textarea
               type="text"
               id="option3"
@@ -149,7 +149,7 @@ function EditQuestion(){
         </div>
 
         {extraOpt[1] === true && (
-          <div class="input-wrapper">
+          <div className="input-wrapper">
             <textarea
               type="text"
               id="option4"
@@ -160,7 +160,7 @@ function EditQuestion(){
             <label htmlFor="option4">option4</label>
           </div>
         )}
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <input
             type="number"
             id="ans"
@@ -170,7 +170,7 @@ function EditQuestion(){
           />
           <label htmlFor="ans">Correct Opt</label>
         </div>
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <input
             type="number"
             id="score"
@@ -180,7 +180,7 @@ function EditQuestion(){
           />
           <label htmlFor="score">Max Score</label>
         </div>
-        <div class="input-wrapper">
+        <div className="input-wrapper">
           <input
             type="number"
             id="penalty"

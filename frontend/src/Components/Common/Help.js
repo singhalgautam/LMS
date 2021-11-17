@@ -10,10 +10,10 @@ function Help() {
         <h2>Help</h2>
         <div className="call-help">
           <a href="tel:+91 6353857230">
-            <i class="bi bi-telephone-fill"> Contact Us</i>
+            <i className="bi bi-telephone-fill"> Contact Us</i>
           </a>
           <a href="mailto:singhabhinav020@gamil.com">
-            <i class="bi bi-envelope-fill"> Mail us</i>
+            <i className="bi bi-envelope-fill"> Mail us</i>
           </a>
         </div>
       </header>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+import file from '../../../assets/file.svg';
 
 function StudentFile({ id }) {
   const [uploadedFile, setUploadedFile] = useState([]);
@@ -19,7 +20,7 @@ function StudentFile({ id }) {
             <div>
               <img
                 style={{ height: "60vh", width: "40vw" }}
-                src="https://ufile.io/assets/img/icons/file-types.svg"
+                src={file}
                 alt="file"
               />
             </div>

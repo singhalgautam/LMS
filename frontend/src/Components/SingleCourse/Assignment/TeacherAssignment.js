@@ -3,6 +3,16 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 
 function TeacherAssignment({ id }) {
+  function getAssignments() {
+    setDeadline("");
+    setTopic("");
+    setTitle("");
+    setFile("");
+    setFileName("");
+    Axios.post("http://localhost:3002/getAssignments", { id }).then((res) => {
+      setAssignmentList(res.data.reverse());
+    });
+  }
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
   const saveFile = (e) => {
@@ -21,12 +31,12 @@ function TeacherAssignment({ id }) {
     alert(fileName)
     console.log(formData);
     try {
-      const res = await Axios.post(
+      await Axios.post(
         "http://localhost:3002/uploadAssignment",
         formData
-      );
-      
-      getAssignments();
+      ).then(async(res)=>{
+        await getAssignments();
+      });
     } catch (ex) {
       console.log(ex);
     }
@@ -35,16 +45,7 @@ function TeacherAssignment({ id }) {
   const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("");
   const [deadline, setDeadline] = useState();
-  function getAssignments(){
-      setDeadline("");
-      setTopic("");
-      setTitle("");
-      setFile('');
-      setFileName('');
-    Axios.post("http://localhost:3002/getAssignments", { id }).then((res) => {
-    setAssignmentList(res.data);
-    });
-  }
+  
   useEffect(() => {
     getAssignments();
   }, []);

@@ -17,7 +17,7 @@ function StudentAnnouncement({ id }) {
         <div className="no-item">
           <h3>Stay tuned in for new Announcements</h3>
           <img
-            style={{ height: "60vh", width: "40vw" }}
+            style={{ height: "60vh", width: "35vw" }}
             src={announcementImg}
             alt="announcementImg"
           />
