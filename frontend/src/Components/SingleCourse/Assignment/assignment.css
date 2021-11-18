@@ -24,14 +24,14 @@
 
 form .ques-container label {
   display: inline-block;
-  width: 11.5%;
+  width:4.6em;
   margin-right: 1em;
-  text-align: right;
+  text-align: left;
 }
 
 form .ques-container input {
   margin-top: 2em;
-  width: 75%;
+  width: 60%;
   margin-right: 0;
 }
 
@@ -63,9 +63,10 @@ form .ques-container input {
   background-color: #fff;
   border: solid 0.8px rgba(153, 153, 153, 0.459);
   border-radius: 4px;
-  margin-bottom: 1em;
   display: flex;
-  width: 74.5%;
+  width: 85%;
+  margin:auto;
+  margin-bottom: 1em;
 }
 
 .profPic img {

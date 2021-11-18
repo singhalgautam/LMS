@@ -12,7 +12,7 @@ function StudentAnnouncement({ id }) {
     );
   }, [id]);
   return (
-    <div style={{ textAlign: "center", marginTop: "5em" }}>
+    <div style={{textAlign: "center", marginTop: "5em" }}>
       {postAnnouncement.length === 0 && (
         <div className="no-item">
           <h3>Stay tuned in for new Announcements</h3>
@@ -23,17 +23,19 @@ function StudentAnnouncement({ id }) {
           />
         </div>
       )}
-      {postAnnouncement
-        .slice(0)
-        .reverse()
-        .map((announcement) => {
-          return (
-            <SingleAnnouncement
-              key={announcement.announcementId}
-              {...announcement}
-            />
-          );
-        })}
+      <div className="ques-container" style={{ border:"none",width:'85%',marginTop:'-4em' }}>
+        {postAnnouncement
+          .slice(0)
+          .reverse()
+          .map((announcement) => {
+            return (
+              <SingleAnnouncement
+                key={announcement.announcementId}
+                {...announcement}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 }
@@ -54,15 +56,17 @@ const SingleAnnouncement = ({ announcement, my_timestamp }) => {
   ];
   return (
     <main className="announce-container">
-      {my_timestamp.slice(8, 10) +
-        " " +
-        monthNames[my_timestamp.slice(5, 7)] +
-        " " +
-        my_timestamp.slice(11, 16)}
       <div className="announcWrapper">
         <i className="bi bi-megaphone"></i>
         <div>{announcement}</div>
       </div>
+        <div className="announcDate" >
+          {my_timestamp.slice(8, 10) +
+            " " +
+            monthNames[my_timestamp.slice(5, 7)] +
+            " " +
+            my_timestamp.slice(11, 16)}
+        </div>
     </main>
   );
 };

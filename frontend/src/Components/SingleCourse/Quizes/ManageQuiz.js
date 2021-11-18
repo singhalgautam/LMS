@@ -95,13 +95,13 @@ function ManageQuiz() {
           />
         );
       })}
-      <button className="opt-val-btn">
-        <Link to={
-              {
-                pathname:`/courses/${id}`,
-                
-              }}
-              className="link-btn">
+      <button className="opt-val-btn" style={{ marginLeft: "7.5%" }}>
+        <Link
+          to={{
+            pathname: `/courses/${id}`,
+          }}
+          className="link-btn"
+        >
           Publish
         </Link>
       </button>
@@ -133,7 +133,7 @@ const SingleQuestion = ({
     Axios.post(`http://localhost:3002/deleteQues`, {
       questionId,
       quizId,
-      maxScore,
+      maxScore:score,
     }).then((res) => {
       getNewQues();
       getNewQuizInfo();
@@ -261,29 +261,40 @@ const CreateQuestion = ({
   };
   const handleCreateQues = (e) => {
     e.preventDefault();
-    console.log(quizId);
-    const obj = {
-      quizId: quizId,
-      questionName: question,
-      answer: answer,
-      maxScore: maxScore,
-      penaltyScore: penaltyScore,
-      opt1: opt1,
-      opt2: opt2,
-    };
-    if (extraOpt[0] === 1) {
-      obj.opt3 = opt3;
+    if (
+      question !== "" &&
+      opt1 !== "" &&
+      opt2 !== "" &&
+      answer !== "" &&
+      maxScore !== "" &&
+      penaltyScore !== ""
+    ) {
+      // console.log(quizId);
+      const obj = {
+        quizId: quizId,
+        questionName: question,
+        answer: answer,
+        maxScore: maxScore,
+        penaltyScore: penaltyScore,
+        opt1: opt1,
+        opt2: opt2,
+      };
+      if (extraOpt[0] === 1) {
+        obj.opt3 = opt3;
+      }
+      if (extraOpt[1] === 1) {
+        obj.opt4 = opt4;
+      }
+      // setTotalQues(totalQues + 1);
+      // setTotalMarks(totalMarks + maxScore);
+      Axios.post("http://localhost:3002/addQues", obj).then((res) => {
+        setIsCreateQuesClicked(false);
+        getNewQues();
+        getNewQuizInfo();
+      });
+    } else {
+      alert("All feilds with * mark is mandatory");
     }
-    if (extraOpt[1] === 1) {
-      obj.opt4 = opt4;
-    }
-    // setTotalQues(totalQues + 1);
-    // setTotalMarks(totalMarks + maxScore);
-    Axios.post("http://localhost:3002/addQues", obj).then((res) => {
-      setIsCreateQuesClicked(false);
-      getNewQues();
-      getNewQuizInfo();
-    });
   };
   
   return (
@@ -300,7 +311,9 @@ const CreateQuestion = ({
             required
             onChange={(e) => setQuestion(e.target.value)}
           />
-          <label htmlFor="quesName">Question</label>
+          <label htmlFor="quesName">
+            Question<span className="astrict">*</span>
+          </label>
         </div>
         <div className="input-wrapper">
           <textarea
@@ -310,7 +323,9 @@ const CreateQuestion = ({
             required
             onChange={(e) => setOpt1(e.target.value)}
           />
-          <label htmlFor="opt1">opt1</label>
+          <label htmlFor="opt1">
+            opt1<span className="astrict">*</span>
+          </label>
         </div>
         <div className="input-wrapper">
           <textarea
@@ -320,7 +335,9 @@ const CreateQuestion = ({
             required
             onChange={(e) => setOpt2(e.target.value)}
           />
-          <label htmlFor="opt2">opt2</label>
+          <label htmlFor="opt2">
+            opt2<span className="astrict">*</span>
+          </label>
         </div>
         <div className="adjust-btn">
           {!extraOpt[0] && (
@@ -367,10 +384,23 @@ const CreateQuestion = ({
             type="number"
             id="answer"
             value={answer}
+            min="1"
+            max={i + 2}
             required
-            onChange={(e) => setAnswer(e.target.value)}
+            onChange={(e) => {
+              if (
+                (e.target.value <= i + 2 && e.target.value >= 1) ||
+                e.target.value===''
+              ) {
+                setAnswer(e.target.value);
+              } else {
+                alert("choose opt number within limit");
+              }
+            }}
           />
-          <label htmlFor="answer">Correct Opt</label>
+          <label htmlFor="answer">
+            Correct Opt<span className="astrict">*</span>
+          </label>
         </div>
         <div className="input-wrapper">
           <input
@@ -380,7 +410,9 @@ const CreateQuestion = ({
             required
             onChange={(e) => setMaxScore(e.target.value)}
           />
-          <label htmlFor="maxScore">Max Score</label>
+          <label htmlFor="maxScore">
+            Max Score<span className="astrict">*</span>
+          </label>
         </div>
         <div className="input-wrapper">
           <input
@@ -388,9 +420,18 @@ const CreateQuestion = ({
             id="penaltyScore"
             value={penaltyScore}
             required
-            onChange={(e) => setPenaltyScore(e.target.value)}
+            max='0'
+            onChange={(e) => {
+              if (e.target.value <= 0) {
+                setPenaltyScore(e.target.value);
+              } else {
+                alert("only non positive number allowed");
+              }
+            }}
           />
-          <label htmlFor="penaltyScore">Penalty Score</label>
+          <label htmlFor="penaltyScore">
+            Penalty Score<span className="astrict">*</span>
+          </label>
         </div>
         <div className="adjust-btn">
           <button className="btn btn-quiz" onClick={handleCreateQues}>

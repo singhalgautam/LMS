@@ -19,15 +19,10 @@ const userRegister = (req, res) => {
         password: hash,
         role: role,
       })
-      .then((err,result) => {
-        if (!err) {
-          console.log(result);
-          console.log("Inserted");
-          res.send(result);
-        } else {
-          req.flash("message", "The entry already exist."); //we send the flash msg
-          return res.redirect("/");
-        }
+      .then((result) => {
+        console.log(result);
+        console.log("Inserted");
+        res.send(result);
       })
       .then((err) => {
         console.log(err);

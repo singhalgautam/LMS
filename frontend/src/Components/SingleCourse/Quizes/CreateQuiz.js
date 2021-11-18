@@ -1,32 +1,35 @@
 import React, { useState } from "react";
-import { useParams,Link } from "react-router-dom";
+import { useParams,useHistory,Link } from "react-router-dom";
 import Axios from "axios";
 function CreateQuiz() {
   const { id } = useParams();
+  const history=useHistory();
+
   const [title, setTitle] = useState("");
   const [instruction, setInstruction] = useState("");
   const [topic, setTopic] = useState("");
   const [duration, setDuration] = useState(Date.now().timestamp);
   const [quizId,setQuizId]=useState(0);
-  const [saved, setSaved] = useState(false);
-  const handleCreateQuiz = (e) => {
+  const handleCreateQuiz = async(e) => {
     e.preventDefault();
-    Axios.post("http://localhost:3002/createQuizInfo", {
+    var quiz=quizId;
+    await Axios.post("http://localhost:3002/createQuizInfo", {
       id,
       title,
       instruction,
       topic,
       duration,
-    }).then((res) => {
+    }).then(async (res) => {
+      quiz=res.data[0].id;
       setQuizId(res.data[0].id);
       console.log(quizId);
-      setSaved(true);
-      alert("succesfully saved");
     });
     // console.log(title);
     // console.log(instruction);
     // console.log(topic);
     // console.log(duration);
+    history.push(`/courses/${id}/quiz/${quiz}`);
+    alert("succesfully created");
   };    
     return (
       <section className="create-container">
@@ -80,34 +83,12 @@ function CreateQuiz() {
             />
             <label htmlFor="appt">Quiz Duration</label>
             <div className="adjust-btn">
-              {!saved && (
-                <button className="btn btn-quiz" onClick={handleCreateQuiz}>
-                  Save
-                </button>
-              )}
+              <button className="btn btn-quiz" onClick={handleCreateQuiz}>
+                Save & Continue
+              </button>
             </div>
           </div>
         </form>
-        {saved && (
-          <div className="btn-continue">
-            <button className="btn btn-quiz btn-continue">
-              <Link
-                to={{
-                  pathname: `/courses/${id}/quiz/${quizId}`,
-                  // state: {
-                  //   title: title,
-                  //   topic: topic,
-                  //   instruction: instruction,
-                  //   duration: duration,
-                  // },
-                }}
-                className="link-btn"
-              >
-                Continue {">>"}
-              </Link>
-            </button>
-          </div>
-        )}
       </section>
     );
 }

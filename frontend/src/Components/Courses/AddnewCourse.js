@@ -25,6 +25,7 @@ function AddnewCourse() {
             type="text"
             name="courseName"
             id="courseName"
+            required
             placeholder="Name of your course"
             value={courseName}
             onChange={(e) => setCourseName(e.target.value)}
@@ -34,6 +35,7 @@ function AddnewCourse() {
             type="text"
             name="desc"
             id="desc"
+            required
             placeholder="Descriptiom of this course"
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
@@ -45,6 +47,7 @@ function AddnewCourse() {
             id="credit"
             placeholder="Credit of this course"
             value={credit}
+            required
             onChange={(e) => setCredit(e.target.value)}
           />
           <label>Prerequisite : </label>
@@ -52,6 +55,7 @@ function AddnewCourse() {
             type="text"
             name="prereq"
             id="prereq"
+            required
             placeholder="Prerequisite of this course"
             value={prereq}
             onChange={(e) => setPrereq(e.target.value)}

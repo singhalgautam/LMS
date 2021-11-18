@@ -36,10 +36,13 @@ function MySubmission() {
   };
   const uploadFile = async (e) => {
     e.preventDefault();
-    const currTime = new Date().toLocaleString();
-    let late=1;
-    if (currTime < time){
-      late=0;
+    const crTime = new Date().toLocaleString('en-GB');
+    let currTime=crTime.slice(6,10)+'-'+crTime.slice(3,5)+'-'+crTime.slice(0,2)+ crTime.slice(10,17)+' hr';
+    console.log(`currTime: ${currTime}`);
+    console.log(`time: ${time}`);
+    let late=0;
+    if (currTime < time) {
+      late = 1;
     }
     const formData = new FormData();
     formData.append("file", file);
@@ -143,28 +146,31 @@ function MySubmission() {
                 <label
                   htmlFor="file-upload"
                   className="custom-assign-upload"
-                  style={{ width: "18em", border: "2px solid #9658fe" }}
+                  style={{ width: "38%", border: "2px solid #9658fe" }}
                 >
                   <i
                     className="bi bi-plus-lg"
-                    style={{ marginRight: "0.5em" }}
+                    style={{ marginLeft: "6%", width: "10%" }}
                   ></i>
-                  <p style={{ display: "inline-block" }}>
+                  <p
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "3%",
+                    }}
+                  >
                     Choose Assignment File
                   </p>
                 </label>
                 <input
+                  style={{ width: "max-content" }}
                   type="file"
                   name="file-upload"
                   id="file-upload"
                   onChange={saveFile}
                 />
                 <h4 style={{ marginTop: "2em" }}>{fileName}</h4>
-                <label
-                  htmlFor="comment"
-                  style={{ width: "10em", marginLeft: "-2.5em" }}
-                >
-                  Add a Comment:{" "}
+                <label htmlFor="comment" style={{ width: "max-content" }}>
+                  Add a Comment:
                 </label>
                 <textarea
                   style={{ height: "5em", width: "90%" }}
@@ -180,7 +186,7 @@ function MySubmission() {
           )}
           {message !== "Turn In" && (
             <div style={{ textAlign: "left" }}>
-              <h3 className="heading" >
+              <h3 className="heading" style={{ marginLeft: "0" }}>
                 View your Submitted File
               </h3>
               <p>Roll No : {myAssign.roll}</p>
@@ -195,7 +201,11 @@ function MySubmission() {
                   {myAssign.fileName}
                 </a>
               </div>
-              {myAssign.comment!=='' && <div className="assign-commnent">You Commented : {myAssign.comment}</div>}
+              {myAssign.comment !== "" && (
+                <div className="assign-commnent">
+                  You Commented : {myAssign.comment}
+                </div>
+              )}
             </div>
           )}
           {opt}

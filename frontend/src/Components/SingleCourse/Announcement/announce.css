@@ -1,24 +1,32 @@
 .announce-container {
   margin: auto;
-  width: 60vw;
+  width: 100%;
 }
 
 .announcWrapper {
   display: inline-block;
   padding: 1rem;
   font-size: 1rem;
-  font-weight: 300;
-  margin-bottom: 1.5rem;
+  font-weight: 400;
+  margin-top: 1.5rem;
   background-color: #fff;
   border: solid 0.8px rgba(153, 153, 153, 0.459);
   border-radius: 6px;
   display: flex;
+  text-align: left;
 }
 
 .announcWrapper i {
   margin-right: 1rem;
+  width: 2%;
 }
 
+.announcDate {
+  color: #7b7b94;
+  font-size: small;
+  text-align: right;
+  
+}
 
 
 /* .announceTime{

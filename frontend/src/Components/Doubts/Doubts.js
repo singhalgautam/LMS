@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context";
 import "./Doubts.css";
 import Axios from 'axios';
-import logo from "../../assets/web-logo-light.jpg";
+import logo from "../../assets/user.png";
 import { Link } from "react-router-dom";
 
 function Doubts() {
@@ -52,7 +52,7 @@ function Doubts() {
               <div>
                 <label htmlFor="title">Title : </label>
                 <input
-                  style={{ width: "33em" }}
+                  // style={{ width: "33rem" }}
                   type="text"
                   name="topic"
                   id="topic"

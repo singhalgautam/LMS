@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams,useLocation } from "react-router-dom";
 import Axios from "axios";
-import logo from "../../../assets/web-logo-light.jpg";
+import logo from "../../../assets/user.png";
 
 function ViewSubmissions() {
   const {courseId}=useParams();

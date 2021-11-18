@@ -51,9 +51,9 @@ function TeacherAssignment({ id }) {
   }, []);
   return (
     <main>
-      <div className="heading">Upload new assignment</div>
-      <form className="form" style={{ textAlign: "center" }}>
-        <div className="ques-container">
+      <form className="form">
+        <div className="heading">Upload new assignment</div>
+        <div className="ques-container" style={{ textAlign: "center" }}>
           <label htmlFor="title">Title : </label>
           <input
             type="text"
@@ -85,10 +85,12 @@ function TeacherAssignment({ id }) {
             <label
               htmlFor="file-upload"
               className="custom-assign-upload"
-              style={{ width: "18em", border: "2px solid #9658fe" }}
+              style={{ width: "38%", border: "2px solid #9658fe" }}
             >
-              <i className="bi bi-plus-lg" style={{ marginRight: "0.5em" }}></i>
-              <p style={{ display: "inline-block" }}>Choose Assignment File</p>
+              <i className="bi bi-plus-lg" style={{ marginLeft: "0.75em" }}></i>
+              <p style={{ display: "inline-block", marginLeft: "0.75em" }}>
+                Choose Assignment File
+              </p>
             </label>
             <input
               type="file"

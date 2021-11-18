@@ -33,10 +33,15 @@ function TeacherAnnouncement({ id }) {
   };
   return (
     <div>
-      <form className="form" onSubmit={handleAnnouncement}>
+      <form
+        className="form ques-container"
+        style={{ width: "85%" }}
+        onSubmit={handleAnnouncement}
+      >
         <label htmlFor="announcement">Make a new announcement</label>
         <br />
         <textarea
+          style={{ width: "100%" }}
           type="text"
           name="announcement"
           id="announcement"
@@ -49,22 +54,24 @@ function TeacherAnnouncement({ id }) {
         <button className="btn">Post</button>
       </form>
       <br />
-      {postAnnouncement.length !== 0 && (
-        <div className="heading">Previous Announcements</div>
-      )}
+      <div className="ques-container" style={{ border:"none",width:'85%',marginTop:'-1.5em' }}>
+        {postAnnouncement.length !== 0 && (
+          <div className="heading" style={{marginLeft: "0"}}>Previous Announcements</div>
+        )}
 
-      <br />
-      {postAnnouncement
-        .slice(0)
-        .reverse()
-        .map((announcement) => {
-          return (
-            <SingleAnnouncement
-              key={announcement.announcementId}
-              {...announcement}
-            />
-          );
-        })}
+        <br />
+        {postAnnouncement
+          .slice(0)
+          .reverse()
+          .map((announcement) => {
+            return (
+              <SingleAnnouncement
+                key={announcement.announcementId}
+                {...announcement}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 }
@@ -85,16 +92,16 @@ const SingleAnnouncement = ({ announcement, my_timestamp }) => {
   ];
   return (
     <main className="announce-container">
-      <div className="announceTime">
+      <div className="announcWrapper">
+        <i className="bi bi-megaphone"></i>
+        <div>{announcement}</div>
+      </div>
+      <div className="announcDate">
         {my_timestamp.slice(8, 10) +
           " " +
           monthNames[my_timestamp.slice(5, 7)] +
           " " +
           my_timestamp.slice(11, 16)}
-      </div>
-      <div className="announcWrapper">
-        <i className="bi bi-megaphone"></i>
-        <div>{announcement}</div>
       </div>
     </main>
   );

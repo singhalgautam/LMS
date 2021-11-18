@@ -171,7 +171,8 @@ app.post("/updateProfile", (req, res) => {
       //console.log(result)
       console.log("file uploaded");
       res.send("updated");
-    });
+    })
+    .catch((err) => console.log(err));
 });
 /*************************************************** */
 // uploadFile
@@ -200,14 +201,16 @@ app.post("/uploadFile", upload2.single("file"), (req, res) => {
       //console.log(result)
       console.log("file uploaded");
       res.send("ok");
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/getFile", (req, res) => {
   knex("file")
     .select("file", "file_name", "fileId")
     .where({ courseId: req.body.courseId })
-    .then((result) => res.send(result));
+    .then((result) => res.send(result))
+    .catch((err) => console.log(err));
 });
 
 /*********************************** */
@@ -240,14 +243,16 @@ app.post("/uploadAssignment", upload3.single("file"), (req, res) => {
       //console.log(result)
       console.log("file uploaded");
       res.send("done");
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/getAssignments", (req, res) => {
   knex("assignment")
     .select()
     .where({ courseId: req.body.id })
-    .then((result) => res.send(result));
+    .then((result) => res.send(result))
+    .catch((err) => console.log(err));
 });
 app.post("/getAttemptedAssignments", (req, res) => {
   const query = `select asg.assignmentId, asg.courseId, asg.file, asg.fileName, title, topic, deadline from assignment as asg,assignment_submission as ass where asg.assignmentId=ass.assignmentId and asg.courseId=${req.body.id} and studentId=${req.body.studentId}`;
@@ -257,9 +262,12 @@ app.post("/getAttemptedAssignments", (req, res) => {
 });
 app.post("/getUnAttemptedAssignments", (req, res) => {
   const query = `select * from assignment where assignmentId not in (select assignmentId from assignment_submission where studentId=${req.body.studentId}) and courseId=${req.body.id}`;
-  knex.raw(query).then((result) => {
-    res.send(result);
-  });
+  knex
+    .raw(query)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => console.log(err));
 });
 
 /*************************************/
@@ -295,7 +303,8 @@ app.post("/uploadMyAssignment", upload4.single("file"), (req, res) => {
       //console.log(result)
       console.log("file uploaded");
       res.send("hi");
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/deleteMyAssignment", (req, res) => {
@@ -306,7 +315,8 @@ app.post("/deleteMyAssignment", (req, res) => {
       //console.log(result)
       console.log("succesffuly deleted");
       res.send("deleted..");
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/getMyAssignments", (req, res) => {
@@ -319,7 +329,8 @@ app.post("/getMyAssignments", (req, res) => {
     .then((result) => {
       //console.log(result)
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/viewStudentAssignmentSubmission", (req, res) => {
@@ -331,7 +342,8 @@ app.post("/viewStudentAssignmentSubmission", (req, res) => {
     })
     .then((err) => {
       console.log(err);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 /********************************** */
@@ -371,7 +383,8 @@ app.get("/getCourseList", (req, res) => {
     .then((result) => {
       //console.log(result)
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/enrollMe", (req, res) => {
@@ -384,7 +397,8 @@ app.post("/enrollMe", (req, res) => {
     .then((result) => {
       //console.log(result)
       res.send("You are Successfully enrolled");
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/getMyCourses", (req, res) => {
@@ -404,7 +418,8 @@ app.post("/getMyCourses", (req, res) => {
     .then((result) => {
       //console.log(result)
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/getTeacherCourse", (req, res) => {
@@ -414,7 +429,8 @@ app.post("/getTeacherCourse", (req, res) => {
     .then((result) => {
       //console.log(result)
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 /***************************************************/
@@ -428,7 +444,8 @@ app.post("/createAnnouncement", (req, res) => {
     .then((result) => {
       //console.log(result)
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/getAnnouncement", (req, res) => {
@@ -439,7 +456,8 @@ app.post("/getAnnouncement", (req, res) => {
     .then((result) => {
       //console.log(result)
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 /************************************ */
@@ -460,8 +478,10 @@ app.post("/createQuizInfo", (req, res) => {
         .then((resu) => {
           // console.log(resu);
           res.send(resu);
-        });
-    });
+        })
+        .catch((er) => console.log(er));
+    })
+    .catch((err) => console.log(err));
 });
 app.post("/getQuizInfo", (req, res) => {
   knex("quiz")
@@ -469,7 +489,8 @@ app.post("/getQuizInfo", (req, res) => {
     .select()
     .then((result) => {
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 app.post("/getAllQuizes", (req, res) => {
   knex("quiz")
@@ -477,19 +498,26 @@ app.post("/getAllQuizes", (req, res) => {
     .select()
     .then((result) => {
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 app.post("/getUnattemptedQuizes", (req, res) => {
   const query = `select * from quiz where quizId not in (select quizId from grade where studentId=${req.body.studentId}) and courseId=${req.body.id}`;
-  knex.raw(query).then((result) => {
-    res.send(result);
-  });
+  knex
+    .raw(query)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => console.log(err));
 });
 app.post("/getAttemptedQuizes", (req, res) => {
   const query = `select quiz.quizId, studentId, score, title, duration, topic, totalQues, totalMarks from quiz,grade where quiz.quizId=grade.quizId and courseId=${req.body.id} and studentId=${req.body.studentId}`;
-  knex.raw(query).then((result) => {
-    res.send(result);
-  });
+  knex
+    .raw(query)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => console.log(err));
 });
 // app.post("updateQuizStats",(req,res)=>{
 //   knex("quiz").where({quizId:req.body.quizId}).update({
@@ -498,7 +526,7 @@ app.post("/getAttemptedQuizes", (req, res) => {
 //   }).then((result)=>{
 //     //console.log(result)
 //     // res.send(result);
-//   })
+//   }).catch((err) => console.log(err))
 // })
 app.post("/addQues", (req, res) => {
   knex("quiz_question")
@@ -515,7 +543,8 @@ app.post("/addQues", (req, res) => {
         .then((resu) => {
           // console.log(resu);
           res.send("Successfully added the question");
-        });
+        })
+        .catch((er) => console.log(er));
     })
     .catch((err) => console.log(err));
 });
@@ -575,8 +604,10 @@ app.post("/deleteQues", (req, res) => {
         .then((resu) => {
           // console.log(resu);
           res.send("Successfully deleted the question");
-        });
-    });
+        })
+        .catch((er) => console.log(er));
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/updateMaxScore", (req, res) => {
@@ -593,8 +624,10 @@ app.post("/updateMaxScore", (req, res) => {
         .then((resu) => {
           // console.log(resu);
           res.send("Updated successfully");
-        });
-    });
+        })
+        .catch((er) => console.log(er));
+    })
+    .catch((err) => console.log(err));
 });
 app.post("/updatePenaltyScore", (req, res) => {
   knex("quiz_question")
@@ -611,7 +644,8 @@ app.post("/deleteQuiz", (req, res) => {
     .then((result) => {
       console.log("deleted..");
       res.send(200);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/insertQuizResponse", (req, res) => {
@@ -627,18 +661,23 @@ app.post("/insertQuizResponse", (req, res) => {
         .then((resu) => {
           // console.log(resu);
           res.send("done");
-        });
-    });
+        })
+        .catch((er) => console.log(er));
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/getScoreAndResponse", (req, res) => {
   // knex("quiz_response AS qr").join("quiz_question As qq").on('qr.quizId','=','qq.quizId').andOn('qr.questionId','=','qq.questionId').andOn('qr.studentId','=',req.body.studentId).andOn('qr.quizId','=',req.body.quizId).select('questionName,maxScore,penaltyScore,answer,opt1,opt2,opt3,opt4,qq.questionId,response,marks')
   const query = `select questionName,maxScore,penaltyScore,answer,opt1,opt2,opt3,opt4,qq.questionId,response,marks from quiz_response AS qr, quiz_question As qq where qr.quizId = qq.quizId and qr.questionId = qq.questionId and qr.studentId=${req.body.studentId} and qq.quizId=${req.body.quizId}`;
   // console.log(query);
-  knex.raw(query).then((result) => {
-    //console.log(result)
-    res.send(result);
-  });
+  knex
+    .raw(query)
+    .then((result) => {
+      //console.log(result)
+      res.send(result);
+    })
+    .catch((err) => console.log(err));
 });
 app.post("/getGrade", (req, res) => {
   knex
@@ -648,7 +687,8 @@ app.post("/getGrade", (req, res) => {
     .then((result) => {
       //console.log(result)
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 /*******************************************/
@@ -658,7 +698,8 @@ app.post("/askDoubt", (req, res) => {
     .insert(req.body)
     .then((result) => {
       //console.log(result)
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.get("/getDoubtList", (req, res) => {
@@ -677,7 +718,8 @@ app.get("/getDoubtList", (req, res) => {
     .then((result) => {
       //console.log(result)
       res.send(result);
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 app.post("/addDoubtAnswer", (req, res) => {
@@ -686,7 +728,8 @@ app.post("/addDoubtAnswer", (req, res) => {
     .then((result) => {
       //console.log(result)
       res.send("done");
-    });
+    })
+    .catch((err) => console.log(err));
 });
 app.post("/getDoubtAnswers", (req, res) => {
   const query = `select name,photo,doubt_ans,doubt_ansId from doubt_ans as ds, user where ds.replierId=user.id and doubtId=${req.body.doubtId}`;

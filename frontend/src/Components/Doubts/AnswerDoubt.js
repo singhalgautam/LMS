@@ -1,38 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Axios from "axios";
-import logo from "../../assets/web-logo-light.jpg";
+import logo from "../../assets/user.png";
 import { useGlobalContext } from "../../context";
 
 function AnswerDoubt() {
   const { info } = useGlobalContext();
-  const location=useLocation();
-  const {doubtId,question,title,topic,status,askerId,photo,name}=location.state;
+  const location = useLocation();
+  const { doubtId, question, title, topic, status, askerId, photo, name } =
+    location.state;
   if (!photo) {
     photo = logo;
   }
-  const [answer,setAnswer]=useState('');
-  const [answerList,setAnswerList]=useState([]);
-  const getAllAnswer=()=>{
+  const [answer, setAnswer] = useState("");
+  const [answerList, setAnswerList] = useState([]);
+  const getAllAnswer = () => {
     Axios.post("http://localhost:3002/getDoubtAnswers", { doubtId }).then(
       (res) => {
         console.log(res.data[0]);
         setAnswerList(res.data[0]);
       }
     );
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     getAllAnswer();
-  },[]);
-    
-  const addAnswer=async(e)=>{
+  }, []);
+
+  const addAnswer = async (e) => {
     e.preventDefault();
-    await Axios.post("http://localhost:3002/addDoubtAnswer",{doubt_ans:answer,doubtId,replierId:info.id}).then(()=>{
-      setAnswer('');
-      alert('successfully answered');
-    });
-    await getAllAnswer();
-  }
+    if (answer !== "") {
+      await Axios.post("http://localhost:3002/addDoubtAnswer", {
+        doubt_ans: answer,
+        doubtId,
+        replierId: info.id,
+      }).then(() => {
+        setAnswer("");
+        alert("successfully answered");
+      });
+      getAllAnswer();
+    } else {
+      alert("Please add some answer");
+    }
+  };
   return (
     <div>
       <header>
@@ -84,15 +93,16 @@ const SingleAnswer = ({ name, photo, doubt_ans, doubt_ansId }) => {
   }
   return (
     <div>
-      <div className="std-up-file" style={{ padding: "1.7em",margin:'auto',marginTop:'3em' }}>
+      <div
+        className="std-up-file"
+        style={{ padding: "1.7em", margin: "auto", marginTop: "3em" }}
+      >
         <div className="profilePic">
           <img src={photo} alt="user" />
         </div>
         <br />
         <div>
-          <div>
-            {doubt_ans}
-          </div>
+          <div>{doubt_ans}</div>
           <div className="doubtAskerName">{name}</div>
         </div>
       </div>

@@ -15,7 +15,7 @@ function TeacherQuiz({id}) {
   
     return (
       <div className="quiz">
-        <div className="enroll">
+        <div className="enroll" style={{marginLeft:"7.5%"}}>
           <button className="btn btn-quiz">
             <Link to={`/courses/${id}/quiz`} className="link-btn">
               <i className="bi bi-plus-lg"></i>Add Quiz

@@ -1,0 +1,6 @@
+Dear Programmers,
+    I'm using C++11
+    Regards, Swift!3r_str=Dear Programmers,
+    I'm using C++11
+    Regards, Swift!
+(Dear Programmers, I'm using C++11 Regards, Swift!)

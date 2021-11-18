@@ -1,0 +1,91 @@
+for(i = 1; i <= n; i++) {
+    for(j = 1; j <= m; j++)
+        cout << a[i][j] << " ";
+    cout << "\n";
+}
+is equivalent to this:
+
+for(i = 1; i <= n; i++)
+    for(j = 1; j <= m; j++)
+        cout << a[i][j] << " \n"[j == m];
+And here is the reason: " \n" is a char*, " \n"[0] is ' ' and " \n"[1] is '\n'.
+ 
+************************************************************************************
+
+Variadic Functions and Macros
+int sum() { return 0; }
+
+template<typename... Args>
+int sum(int a, Args... args) { return a + sum(args...); }
+
+int main() { cout << sum(5, 7, 2, 2) + sum(3, 4); /* prints "23" */ }
+
+..........
+int sum() { return 0; }
+
+template<typename T, typename... Args>
+T sum(T a, Args... args) { return a + sum(args...); }
+
+int main() { cout << sum(5, 7, 2, 2) + sum(3.14, 4.89); /* prints "24.03" */ }
+..........
+#define a_macro(args...) sum(args)
+
+int sum() { return 0; }
+
+template<typename T, typename... Args>
+auto sum(T a, Args... args) { return a + sum(args...); }
+
+int main() { cout << a_macro(5, 7, 2, 2) + a_macro(3.14, 4.89); /* prints "24.03" */ }
+Using these 2, we can have a great debugging function: (thanks to Igorjan94) — Updated!
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define error(args...) { string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s); istream_iterator<string> _it(_ss); err(_it, args); }
+
+void err(istream_iterator<string> it) {}
+template<typename T, typename... Args>
+void err(istream_iterator<string> it, T a, Args... args) {
+	cerr << *it << " = " << a << endl;
+	err(++it, args...);
+}
+
+int main() {
+	int a = 4, b = 8, c = 9;
+	error(a, b, c);
+}
+Output:
+
+a = 4
+b = 8
+c = 9
+This function helps a lot in debugging.
+
+
+************************************************************************************
+
+
+Now you can have your own custom literals! Sounds great :) So let's see an example:
+
+long long operator "" _m(unsigned long long literal) {
+	return literal;
+}
+
+long double operator "" _cm(unsigned long long literal) {
+	return literal / 100.0;
+}
+
+long long operator "" _km(unsigned long long literal) {
+	return literal * 1000;
+}
+
+int main() {
+	// See results in meter:
+	cout << 250_m << " meters \n"; // Prints 250 meters
+	cout << 12_km << " meters \n"; // Prints 12000 meters
+	cout << 421_cm << " meters \n"; // Prints 4.21 meters
+}
+Note that a literal should start with an underscore (_). We declare a new literal by this pattern:
+
+[returnType] operator "" _[name]([parameters]) { [body] }
